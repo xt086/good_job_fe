@@ -1,0 +1,12 @@
+0000000000000000000000000000000000000000 5818cd238746f5d0e29fa723b9fe31e42d961561 xtuan <xtuan2002@gmail.com@gmail.com> 1715536458 +0700	commit (initial): fix
+5818cd238746f5d0e29fa723b9fe31e42d961561 5818cd238746f5d0e29fa723b9fe31e42d961561 xtuan <xtuan2002@gmail.com@gmail.com> 1715536506 +0700	checkout: moving from master to main
+5818cd238746f5d0e29fa723b9fe31e42d961561 5818cd238746f5d0e29fa723b9fe31e42d961561 xtuan <xtuan2002@gmail.com@gmail.com> 1715536538 +0700	checkout: moving from main to master
+5818cd238746f5d0e29fa723b9fe31e42d961561 5818cd238746f5d0e29fa723b9fe31e42d961561 xtuan <xtuan2002@gmail.com@gmail.com> 1715614055 +0700	checkout: moving from master to develop
+5818cd238746f5d0e29fa723b9fe31e42d961561 5818cd238746f5d0e29fa723b9fe31e42d961561 xtuan <xtuan2002@gmail.com@gmail.com> 1715615726 +0700	checkout: moving from develop to job
+5818cd238746f5d0e29fa723b9fe31e42d961561 daec9ae28824101690e9196fc29f575f609729dc xtuan <xtuan2002@gmail.com@gmail.com> 1715643003 +0700	commit: fix
+daec9ae28824101690e9196fc29f575f609729dc 2cffe59528c3715c08f5ed12818fbe909cdcb3eb xtuan <xtuan2002@gmail.com@gmail.com> 1715792467 +0700	commit: fix
+2cffe59528c3715c08f5ed12818fbe909cdcb3eb 5818cd238746f5d0e29fa723b9fe31e42d961561 xtuan <xtuan2002@gmail.com@gmail.com> 1715792477 +0700	checkout: moving from job to develop
+5818cd238746f5d0e29fa723b9fe31e42d961561 ed9b73dd34add71c9afeb10b55ef203221f9abb6 xtuan <xtuan2002@gmail.com@gmail.com> 1715797745 +0700	commit: fix
+ed9b73dd34add71c9afeb10b55ef203221f9abb6 2cffe59528c3715c08f5ed12818fbe909cdcb3eb xtuan <xtuan2002@gmail.com@gmail.com> 1715797857 +0700	checkout: moving from develop to job
+2cffe59528c3715c08f5ed12818fbe909cdcb3eb ed9b73dd34add71c9afeb10b55ef203221f9abb6 xtuan <xtuan2002@gmail.com@gmail.com> 1715798041 +0700	checkout: moving from job to develop
+ed9b73dd34add71c9afeb10b55ef203221f9abb6 2cffe59528c3715c08f5ed12818fbe909cdcb3eb xtuan <xtuan2002@gmail.com@gmail.com> 1715798360 +0700	checkout: moving from develop to job
