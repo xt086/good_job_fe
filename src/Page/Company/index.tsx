@@ -1,12 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdWork } from "react-icons/md";
 import { RiGroupFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
-import { companies } from "../../public/company/company";
 
-const Company: React.FC = () => {
+interface Company {
+  id: string;
+  title: string;
+  address: {
+    street: string;
+    district: string;
+    city: string;
+    zipcode: string;
+  };
+  industry: string;
+}
+
+const CompanyList: React.FC = () => {
+  const [companies, setCompanies] = useState<Company[]>([]);
   const [searchNation, setSearchNation] = useState<string>("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/company/");
+        if (response.ok) {
+          const data = await response.json();
+          setCompanies(data);
+        } else {
+          console.error("Failed to fetch companies:", response.statusText);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <section className="container mx-auto">
@@ -25,35 +55,30 @@ const Company: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5 md:p-10">
         {companies
           .filter((item) =>
-            item.nation.toLowerCase().includes(searchNation.toLowerCase())
+            item.address.city.toLowerCase().includes(searchNation.toLowerCase())
           )
           .map((item, index) => (
             <div
               key={index}
-              className="bg-white p-4 rounded-md flex flex-col gap-4 border-gray-300 border-solid transition-all duration-300 hover:border-black border-2"
-            >
+              className="bg-white p-4 rounded-md flex flex-col gap-4 border-gray-300 border-solid transition-all duration-300 hover:border-black border-2">
               <Link
                 to={`/companydetail/${item.id}`}
-                className="flex items-center gap-3"
-              >
-                <img
-                  src={item.logo}
-                  alt="Logo"
-                  className="w-16 h-16 md:w-20 md:h-20 object-cover rounded-full"
-                />
+                className="flex items-center gap-3">
                 <div>
                   <h1 className="text-base md:text-lg lg:text-xl font-semibold">
                     {item.title}
                   </h1>
                   <p className="text-sm md:text-base text-gray-500">
-                    {item.nation}
+                    {item.address.city}
                   </p>
                 </div>
               </Link>
               <div className="flex items-center">
                 <FaLocationDot size={16} />
                 <p className="ml-1 text-sm md:text-base">
-                  <strong></strong> {item.address}
+                  <strong></strong> {item.address.street},{" "}
+                  {item.address.district}, {item.address.city},{" "}
+                  {item.address.zipcode}
                 </p>
               </div>
               <div className="flex items-center">
@@ -67,8 +92,7 @@ const Company: React.FC = () => {
                 <p className="ml-1 text-sm md:text-base">
                   <Link
                     to={`/companydetail/${item.id}`}
-                    className="text-customBlue hover:underline"
-                  >
+                    className="text-customBlue hover:underline">
                     Chi Tiết
                   </Link>
                 </p>
@@ -80,4 +104,4 @@ const Company: React.FC = () => {
   );
 };
 
-export default Company;
+export default CompanyList;

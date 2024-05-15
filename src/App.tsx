@@ -14,6 +14,7 @@ import Job from "./Page/Job";
 import Info from "./Page/Employer/Info";
 import NavEm from "./Page/Employer/Nav";
 import Info2 from "./Page/Employer/Info2";
+import Job1 from "./Page/Employer/Job";
 
 const App: React.FC = () => {
   return (
@@ -115,6 +116,16 @@ const App: React.FC = () => {
             <>
               <NavEm />
               <Info />
+              <Footter />
+            </>
+          }
+        />
+        <Route
+          path="/Nhatuyendung/Job"
+          element={
+            <>
+              <NavEm />
+              <Job1 />
               <Footter />
             </>
           }

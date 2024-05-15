@@ -1,5 +1,4 @@
-import React from "react";
-import { jobs } from "../../public/job/job";
+import React, { useState, useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 
 interface JobProps {
@@ -8,7 +7,7 @@ interface JobProps {
   logo: string;
   job: string;
   address: string;
-  requirements: string[]; // Thêm trường requirements vào interface JobProps
+  requirements: string[];
   luong?: string;
 }
 
@@ -48,6 +47,26 @@ const Job: React.FC<{ job: JobProps }> = ({ job }) => {
 };
 
 const JobsList: React.FC = () => {
+  const [jobs, setJobs] = useState<JobProps[]>([]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/jobs/");
+        if (response.ok) {
+          const data = await response.json();
+          setJobs(data);
+        } else {
+          console.error("Failed to fetch jobs:", response.statusText);
+        }
+      } catch (error) {
+        console.error("An error occurred:", error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
   return (
     <section className="container mx-auto">
       <h1 className="text-xl mt-5 md:text-2xl font-semibold ml-4">
