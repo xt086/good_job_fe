@@ -1,15 +1,23 @@
 // Register.tsx
 import React from "react";
+import axios from "axios";
 import { useUserState } from "../../public/state";
 
 const Register: React.FC = () => {
   const { user, setUser, handleChange, errors, validateForm } = useUserState();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateForm()) {
-      // Handle form submission logic here
-      console.log(user);
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/user/register",
+          user
+        );
+        console.log("Registration successful:", response.data);
+      } catch (error) {
+        console.error("Registration failed:", error);
+      }
     } else {
       console.log("Form validation failed");
     }
@@ -23,8 +31,7 @@ const Register: React.FC = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="name"
-            >
+              htmlFor="name">
               Tên
             </label>
             <input
@@ -45,8 +52,7 @@ const Register: React.FC = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
+              htmlFor="email">
               Email
             </label>
             <input
@@ -67,8 +73,7 @@ const Register: React.FC = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
+              htmlFor="password">
               Mật khẩu
             </label>
             <input
@@ -89,8 +94,7 @@ const Register: React.FC = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="confirmPassword"
-            >
+              htmlFor="confirmPassword">
               Đặt lại mật khẩu
             </label>
             <input
@@ -113,8 +117,7 @@ const Register: React.FC = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="phoneNumber"
-            >
+              htmlFor="phoneNumber">
               Số điện thoại
             </label>
             <input
@@ -122,7 +125,7 @@ const Register: React.FC = () => {
                 errors.phoneNumber && "border-red-500"
               }`}
               id="phoneNumber"
-              type="number"
+              type="text"
               name="phoneNumber"
               value={user.phoneNumber}
               onChange={handleChange}
@@ -137,8 +140,7 @@ const Register: React.FC = () => {
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="city"
-            >
+              htmlFor="city">
               Thành phố
             </label>
             <input
@@ -159,8 +161,7 @@ const Register: React.FC = () => {
           <div className="flex flex-col gap-3 items-center justify-between">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
+              type="submit">
               Đăng ký
             </button>
           </div>

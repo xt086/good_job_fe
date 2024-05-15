@@ -1,138 +1,298 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
-const Info = () => {
-  const [street, setStreet] = useState("");
-  const [district, setDistrict] = useState("");
-  const [city, setCity] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [major, setMajor] = useState("");
+interface Major {
+  name: string;
+}
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/major/");
-        setMajor(response.data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
+interface FormData {
+  company_address: {
+    street: string;
+    district: string;
+    city: string;
+    zipcode: number;
+  };
+  username: string;
+  password: string;
+  name: string;
+  age: number;
+  email: string;
+  personal_introduction: string;
+  majors: Major[];
+}
 
-    fetchData();
-  }, []);
+const Info: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    company_address: {
+      street: "",
+      district: "",
+      city: "",
+      zipcode: 0,
+    },
+    username: "",
+    password: "",
+    name: "",
+    age: 0,
+    email: "",
+    personal_introduction: "",
+    majors: [{ name: "" }],
+  });
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/address/", {
-        street,
-        district,
-        city,
-        zipcode,
-        major,
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    if (name.startsWith("company_address.")) {
+      const addressKey = name.split(".")[1];
+      setFormData({
+        ...formData,
+        company_address: { ...formData.company_address, [addressKey]: value },
       });
-      console.log(response.data);
-      // Handle success
-    } catch (error) {
-      console.error("Error:", error);
-      // Handle error
+    } else {
+      setFormData({ ...formData, [name]: value });
     }
   };
+
+  const handleMajorChange = (
+    index: number,
+    e: ChangeEvent<HTMLInputElement>
+  ) => {
+    const newMajors = formData.majors.map((major, majorIndex) => {
+      if (index === majorIndex) {
+        return { ...major, [e.target.name]: e.target.value };
+      }
+      return major;
+    });
+    setFormData({ ...formData, majors: newMajors });
+  };
+
+  const addMajor = () => {
+    setFormData({ ...formData, majors: [...formData.majors, { name: "" }] });
+  };
+
+  const removeMajor = (index: number) => {
+    const newMajors = formData.majors.filter(
+      (_, majorIndex) => index !== majorIndex
+    );
+    setFormData({ ...formData, majors: newMajors });
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    setSuccess(false);
+    try {
+      const payload = {
+        company_address: formData.company_address,
+        username: formData.username,
+        password: formData.password,
+        name: formData.name,
+        age: formData.age,
+        email: formData.email,
+        personal_introduction: formData.personal_introduction,
+        major: formData.majors.map((major) => ({ name: major.name })),
+      };
+      const response = await axios.post(
+        "http://127.0.0.1:8000/company/",
+        payload
+      );
+      console.log("Success:", response.data);
+      setSuccess(true);
+    } catch (error) {
+      console.error("Error:", error);
+      setError(
+        "An error occurred while submitting the form. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <section className="container mx-auto">
-      <h2 className="text-center text-xl uppercase font-semibold mt-5 mb-5">
+    <section className="container mx-auto px-4 py-8">
+      <h2 className="text-center text-2xl font-bold text-gray-800 mb-8">
         Nhập thông tin của công ty để tiếp tục
       </h2>
-      <div className="flex justify-center items-center h-auto mt-5 mb-5">
-        <div className="w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="street">
-                Street:
-              </label>
-              <input
-                id="street"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                value={street}
-                onChange={(e) => setStreet(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="district">
-                District:
-              </label>
-              <input
-                id="district"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                value={district}
-                onChange={(e) => setDistrict(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="city">
-                City:
-              </label>
-              <input
-                id="city"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="zipcode">
-                Zipcode:
-              </label>
-              <input
-                id="zipcode"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                value={zipcode}
-                onChange={(e) => setZipcode(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="major">
-                Major:
-              </label>
-              <input
-                id="major"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                value={major}
-                onChange={(e) => setMajor(e.target.value)}
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <Link to="/Nhatuyendung/Info2">
-                {" "}
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="submit">
-                  Submit
-                </button>
-              </Link>
-            </div>
-          </form>
+      {error && <div className="text-red-500 text-center mb-4">{error}</div>}
+      {success && (
+        <div className="text-green-500 text-center mb-4">
+          Form submitted successfully!
         </div>
-      </div>
+      )}
+      <form onSubmit={handleSubmit} className="space-y-6 max-w-xl mx-auto">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Street
+          </label>
+          <input
+            type="text"
+            name="company_address.street"
+            value={formData.company_address.street}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+            maxLength={300}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            District
+          </label>
+          <input
+            type="text"
+            name="company_address.district"
+            value={formData.company_address.district}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+            maxLength={300}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            City
+          </label>
+          <input
+            type="text"
+            name="company_address.city"
+            value={formData.company_address.city}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+            maxLength={200}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Zipcode
+          </label>
+          <input
+            type="number"
+            name="company_address.zipcode"
+            value={formData.company_address.zipcode}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Username
+          </label>
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+            maxLength={128}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Age</label>
+          <input
+            type="number"
+            name="age"
+            value={formData.age}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Personal Introduction
+          </label>
+          <textarea
+            name="personal_introduction"
+            value={formData.personal_introduction}
+            onChange={handleChange}
+            className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            required
+            maxLength={2000}
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">
+            Majors
+          </label>
+          {formData.majors.map((major, index) => (
+            <div key={index} className="flex items-center mb-2">
+              <input
+                type="text"
+                name="name"
+                value={major.name}
+                onChange={(e) => handleMajorChange(index, e)}
+                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => removeMajor(index)}
+                className="ml-2 bg-red-500 text-white py-2 px-3 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                Remove
+              </button>
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={addMajor}
+            className="mt-2 bg-green-500 text-white py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+            Add Major
+          </button>
+        </div>
+        <button
+          type="submit"
+          className={`w-full bg-blue-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={loading}>
+          {loading ? "Submitting..." : "Submit"}
+        </button>
+      </form>
     </section>
   );
 };
