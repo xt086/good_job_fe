@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
 import NavEm from "./Nav";
 import Footter from "../../Components/Footter";
 import client from "../../config";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Info = () => {
   const [street, setStreet] = useState("");
@@ -14,20 +14,9 @@ const Info = () => {
   const [salary, setSalary] = useState("");
   const [description, setDescription] = useState("");
   const [level, setLevel] = useState("");
-  const [job_address, setJob_address] = useState("");
-  const [company, setCompany] = useState("");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await client.get("/jobs/");
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const [major, setMajor] = useState("");
+  const [applied_jobs, setApplied_jobs] = useState("");
+  const navigate = useNavigate();
 
   const onRegisterCompany = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,23 +29,30 @@ const Info = () => {
 
     const jobData = {
       company_address: addressData,
+      major: [{ name: major }],
+      name,
       salary,
       description,
       level,
-      job_address,
-      company,
+      company: "bf9fa127-13f0-45a8-b8f2-9d80bdee66d6",
+      applied_jobs,
     };
     try {
-      await axios.post("http://127.0.0.1:8000/company/", jobData);
-      // Handle success
+      await client.post("http://127.0.0.1:8000/jobs/", jobData);
+
+      setTimeout(() => {
+        toast.success("Tạo công việc thành công!");
+      }, 1000);
     } catch (error) {
       console.error("Error:", error);
-      // Handle error
+      toast.error("Tạo công việc thất bại!");
     }
   };
   return (
     <section>
       <div className="container mx-auto">
+        <ToastContainer />
+
         <NavEm />
 
         <h2 className="text-center text-xl uppercase font-semibold mt-5 mb-5">
@@ -73,7 +69,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="street"
                 >
-                  Street:
+                  Đường:
                 </label>
                 <input
                   id="street"
@@ -88,7 +84,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="district"
                 >
-                  District:
+                  Quận:
                 </label>
                 <input
                   id="district"
@@ -103,7 +99,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="city"
                 >
-                  City:
+                  Thành phố:
                 </label>
                 <input
                   id="city"
@@ -118,7 +114,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="zipcode"
                 >
-                  Zip code:
+                  Mã vùng:
                 </label>
                 <input
                   id="zipcode"
@@ -131,9 +127,24 @@ const Info = () => {
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="major"
+                >
+                  Ngành
+                </label>
+                <input
+                  id="major"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
+                  value={major}
+                  onChange={(e) => setMajor(e.target.value)}
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="name"
                 >
-                  Name
+                  Tên công ty
                 </label>
                 <input
                   id="companyName"
@@ -148,7 +159,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="salary"
                 >
-                  Salary:
+                  Lương:
                 </label>
                 <input
                   id="salary"
@@ -163,7 +174,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="description"
                 >
-                  Description:
+                  Mô tả công việc:
                 </label>
                 <input
                   id="description"
@@ -178,7 +189,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="level"
                 >
-                  Level:
+                  Cấp độ:
                 </label>
                 <input
                   id="level"
@@ -188,35 +199,20 @@ const Info = () => {
                   onChange={(e) => setLevel(e.target.value)}
                 />
               </div>
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="job_address"
-                >
-                  Job address
-                </label>
-                <input
-                  id="job_address"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  type="text"
-                  value={job_address}
-                  onChange={(e) => setJob_address(e.target.value)}
-                />
-              </div>
 
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="company"
+                  htmlFor="applied_jobs"
                 >
-                  Company:
+                  Ứng tuyển việc làm
                 </label>
                 <input
-                  id="company"
+                  id="applied_jobs"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
-                  value={company}
-                  onChange={(e) => setCompany(e.target.value)}
+                  value={applied_jobs}
+                  onChange={(e) => setApplied_jobs(e.target.value)}
                 />
               </div>
               <div className="flex items-center justify-center">

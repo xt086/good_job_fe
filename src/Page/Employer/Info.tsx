@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import NavEm from "./Nav";
 import Footter from "../../Components/Footter";
 import client from "../../config";
+import { ToastContainer, toast } from "react-toastify";
 
 const Info = () => {
   const [street, setStreet] = useState("");
@@ -10,10 +11,23 @@ const Info = () => {
   const [city, setCity] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [name, setName] = useState("");
+  const [major, setMajor] = useState("");
   const [age, setAge] = useState("");
+  const navigate = useNavigate();
+
   const [personal_introduction, setPersonal_introduction] = useState("");
-  const [userId, setUserId] = useState("");
-  const [major, setMajor] = useState([]);
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    const getUserId = async () => {
+      try {
+        const response = await client.get(`http://127.0.0.1:8000/user/user`);
+        setUser(response.data.user.id);
+      } catch (err) {}
+    };
+
+    getUserId();
+  }, []);
 
   const onRegisterCompany = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,26 +35,35 @@ const Info = () => {
       street,
       district,
       city,
-      zipcode,
+      zipcode: Number(zipcode),
     };
 
     const companyData = {
       company_address: addressData,
+      major: [{ name: major }],
       name,
-      age,
+      age: Number(age),
       personal_introduction,
-      userId,
+      user,
     };
     try {
-      await client.post("/company/", companyData);
-      // Handle success
+      await client.post("http://127.0.0.1:8000/company/", companyData);
+      toast.success("Tạo công ty thành công!");
+
+      setTimeout(() => {
+        navigate("/Nhatuyendung/Job");
+      }, 1000);
     } catch (error) {
+      toast.error("Tạo công ty thất bại!");
+
       console.error("Error:", error);
       // Handle error
     }
   };
   return (
     <section>
+      <ToastContainer />
+
       <NavEm />
 
       <div className="container mx-auto">
@@ -58,7 +81,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="street"
                 >
-                  Street:
+                  Đường:
                 </label>
                 <input
                   id="street"
@@ -73,7 +96,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="district"
                 >
-                  District:
+                  Quận:
                 </label>
                 <input
                   id="district"
@@ -88,7 +111,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="city"
                 >
-                  City:
+                  Thành phố:
                 </label>
                 <input
                   id="city"
@@ -103,7 +126,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="zipcode"
                 >
-                  Zipcode:
+                  Mã vùng:
                 </label>
                 <input
                   id="zipcode"
@@ -113,25 +136,27 @@ const Info = () => {
                   onChange={(e) => setZipcode(e.target.value)}
                 />
               </div>
-              {/* <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="major">
-                Major:
-              </label>
-              <input
-                id="major"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="text"
-                value={major}
-              />
-            </div> */}
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="major"
+                >
+                  Ngành:
+                </label>
+                <input
+                  id="major"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
+                  value={major}
+                  onChange={(e) => setMajor(e.target.value)}
+                />
+              </div>
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="name"
                 >
-                  Name
+                  Tên công ty
                 </label>
                 <input
                   id="companyName"
@@ -146,7 +171,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="age"
                 >
-                  Age:
+                  Số năm thành lập:
                 </label>
                 <input
                   id="age"
@@ -161,7 +186,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="intro"
                 >
-                  Introduction:
+                  Giới thiệu về công ty:
                 </label>
                 <input
                   id="description"

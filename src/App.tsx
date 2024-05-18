@@ -13,9 +13,10 @@ import Lan from "./Page/Employer/Lan";
 import Job from "./Page/Job";
 import Info from "./Page/Employer/Info";
 import NavEm from "./Page/Employer/Nav";
-import Info2 from "./Page/Employer/Info2";
 import Job1 from "./Page/Employer/Job";
 import { AuthContextProvider } from "./Context/AuthContext";
+import { ToastContainer } from "react-toastify";
+import JobDetail from "./Page/JobDetail";
 
 const App: React.FC = () => {
   return (
@@ -29,11 +30,13 @@ const App: React.FC = () => {
           <Route path="/Profile" element={<Profile />} />
           <Route path="/companydetail/:companyId" element={<CompanyDetail />} />
           <Route path="/Timvieclam" element={<Job />} />
+          <Route path="/jobdetail/:jobId" element={<JobDetail />} />
+
           <Route path="/Blog" element={<Blog />} />
           <Route path="/Nhatuyendung" element={<Lan />} />
           <Route path="/Nhatuyendung/Info" element={<Info />} />
           <Route path="/Nhatuyendung/Job" element={<Job1 />} />
-          <Route path="/Nhatuyendung/Info2" element={<Info2 />} />
+          {/* <Route path="/Nhatuyendung/Info2" element={<Info2 />} /> */}
         </Routes>
       </Router>
     </AuthContextProvider>

@@ -20,10 +20,13 @@ const Login: React.FC = () => {
       });
       setCheckLogin(true);
       toast.success("Đăng nhập thành công!");
-      navigate("/Congty");
+
+      setTimeout(() => {
+        navigate("/Nhatuyendung/Info");
+      }, 1000);
     } catch (error) {
       toast.error(
-        "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập."
+        "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập!"
       );
       setCheckLogin(false);
     }
@@ -31,9 +34,9 @@ const Login: React.FC = () => {
 
   return (
     <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <ToastContainer />
-
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <ToastContainer />
+
         <h2 className="text-2xl font-semibold mb-4">
           Đăng nhập Spicy để tiếp tục
         </h2>

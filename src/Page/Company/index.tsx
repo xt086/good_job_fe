@@ -1,8 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import { FaLocationDot } from "react-icons/fa6";
-import { MdWork } from "react-icons/md";
-import { RiGroupFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
@@ -12,30 +9,30 @@ import Cookies from "js-cookie";
 
 interface Company {
   id: string;
-  title: string;
-  address: {
+  name: string;
+  company_address: {
     street: string;
     district: string;
     city: string;
     zipcode: string;
   };
-  industry: string;
+  major: [
+    {
+      name: string;
+    },
+  ];
+  personal_introduction: string;
 }
 
 const CompanyList: React.FC = () => {
   const [companies, setCompanies] = useState<Company[]>([]);
   const [searchNation, setSearchNation] = useState<string>("");
-  const user = useContext(AuthContext);
 
   useEffect(() => {
     const getCompany = async () => {
       try {
-        // console.log(Cookies.get("http://localhost:3000"));
-
         const res = await client.get("http://127.0.0.1:8000/company/");
         setCompanies(res.data);
-
-        console.log(res);
       } catch (error) {
         console.error("An error occurred while fetching company data:", error);
       }
@@ -44,75 +41,79 @@ const CompanyList: React.FC = () => {
     getCompany();
   }, []);
 
+  const filteredCompanies = companies.filter((company) =>
+    company.name.toLowerCase().includes(searchNation.toLowerCase())
+  );
+
   return (
     <section>
       <Navbar />
 
-      <div className="container mx-auto">
-        <h1 className="text-xl mt-5 md:text-2xl font-semibold ml-4">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-xl mt-5 md:text-2xl font-semibold">
           Thông tin công ty tuyển dụng
         </h1>
-        <div className="p-5 md:p-10">
+        <div className="my-5">
           <input
             type="text"
             placeholder="Tìm kiếm công ty / Ha Noi - Viet Nam"
             value={searchNation}
             onChange={(e) => setSearchNation(e.target.value)}
-            className="border flex items-center border-gray-300 rounded-md px-4 py-2 w-full"
+            className="border border-gray-300 rounded-md px-4 py-2 w-full"
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5 md:p-10">
-          {companies
-            .filter((item) =>
-              item.address.city
-                .toLowerCase()
-                .includes(searchNation.toLowerCase())
-            )
-            .map((item, index) => (
-              <div
-                key={index}
-                className="bg-white p-4 rounded-md flex flex-col gap-4 border-gray-300 border-solid transition-all duration-300 hover:border-black border-2"
-              >
-                <Link
-                  to={`/companydetail/${item.id}`}
-                  className="flex items-center gap-3"
-                >
-                  <div>
-                    <h1 className="text-base md:text-lg lg:text-xl font-semibold">
-                      {item.title}
-                    </h1>
-                    <p className="text-sm md:text-base text-gray-500">
-                      {item.address.city}
-                    </p>
-                  </div>
-                </Link>
-                <div className="flex items-center">
-                  <FaLocationDot size={16} />
-                  <p className="ml-1 text-sm md:text-base">
-                    <strong></strong> {item.address.street},{" "}
-                    {item.address.district}, {item.address.city},{" "}
-                    {item.address.zipcode}
-                  </p>
-                </div>
-                <div className="flex items-center">
-                  <MdWork size={16} />
-                  <p className="ml-1 text-sm md:text-base">
-                    <strong></strong> {item.industry}
-                  </p>
-                </div>
-                <div className="flex items-center">
-                  <RiGroupFill size={16} />
-                  <p className="ml-1 text-sm md:text-base">
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Tên công ty
+                </th>
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Địa chỉ
+                </th>
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Ngành
+                </th>
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Chi tiết
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredCompanies.map((company) => (
+                <tr key={company.id}>
+                  <td className="py-2 px-4 border-b border-gray-300">
                     <Link
-                      to={`/companydetail/${item.id}`}
-                      className="text-customBlue hover:underline"
+                      to={`/companydetail/${company.id}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {company.name}
+                    </Link>
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-300">
+                    {company.company_address.street}-
+                    {company.company_address.district}-
+                    {company.company_address.city}-
+                    {company.company_address.zipcode}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-300">
+                    {company.major.map((item, index) => (
+                      <p key={index}>{item.name}</p>
+                    ))}
+                  </td>
+                  <td className="py-4 px-4 border-b border-gray-300">
+                    <Link
+                      to={`/companydetail/${company.id}`}
+                      className="text-blue-600 hover:underline"
                     >
                       Chi Tiết
                     </Link>
-                  </p>
-                </div>
-              </div>
-            ))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
       <Footter />

@@ -4,51 +4,21 @@ import { FaLocationDot } from "react-icons/fa6";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
 import client from "../../config";
+import { Link } from "react-router-dom";
 
 interface JobProps {
   id: string;
-  title: string;
-  logo: string;
-  job: string;
-  address: string;
-  requirements: string[];
-  luong?: string;
+  name: string;
+  job_address: {
+    street: string;
+    district: string;
+    city: string;
+    zipcode: string;
+  };
+  level: string;
+  major: { name: string }[];
+  salary: string;
 }
-
-const Job: React.FC<{ job: JobProps }> = ({ job }) => {
-  const { title, logo, job: jobTitle, address, requirements, luong } = job;
-
-  return (
-    <div className="flex flex-col gap-3 items-center border-gray-300 border-solid transition-all duration-300 hover:border-black border-2 p-4 rounded-sm mx-4 my-4">
-      <div className="flex justify-between items-center w-full">
-        <h1 className="text-xl font-bold mb-2">{jobTitle}</h1>
-        {luong && <p className="text-lg text-blue-400 font-bold">{luong}</p>}
-      </div>
-      <div className="flex items-center justify-center gap-2">
-        <img src={logo} alt={title} className="w-12 h-12 mb-2" />
-        <div>
-          <p className="text-gray-600 font-bold">{title}</p>
-          <div className="flex items-center">
-            <FaLocationDot size={16} />
-            <p className="ml-1">
-              <strong></strong> {address}
-            </p>
-          </div>
-        </div>
-      </div>
-      <hr className="my-2 border-gray-400 w-full" />
-      <div className="text-sm">
-        <ul className="flex flex-wrap">
-          {requirements.map((requirement, index) => (
-            <li key={index} className=" bg-neutral-400 ml-2 p-1 mb-2">
-              {requirement}
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-};
 
 const JobsList: React.FC = () => {
   const [jobs, setJobs] = useState<JobProps[]>([]);
@@ -73,10 +43,69 @@ const JobsList: React.FC = () => {
         <h1 className="text-xl mt-5 md:text-2xl font-semibold ml-4">
           Tin tuyển dụng, việc làm nhanh 24h tại Việt Nam
         </h1>
-        <div className="flex flex-wrap justify-center">
-          {jobs.map((job) => (
-            <Job key={job.id} job={job} />
-          ))}
+        <div className="overflow-x-auto">
+          <table className="min-w-full bg-white">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Tên công ty
+                </th>
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Địa chỉ
+                </th>
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Ngành
+                </th>
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Cấp độ
+                </th>
+
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Lương
+                </th>
+                <th className="py-2 px-4 border-b border-gray-300 text-left">
+                  Chi tiết
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {jobs.map((job) => (
+                <tr key={job.id}>
+                  <td className="py-2 px-4 border-b border-gray-300">
+                    <Link
+                      to={`/jobdetail/${job.id}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {job.name}
+                    </Link>
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-300">
+                    {job.job_address.street} - {job.job_address.district} -{" "}
+                    {job.job_address.city}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-300">
+                    {job.major.map((item, index) => (
+                      <p key={index}>{item.name}</p>
+                    ))}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-300">
+                    {job.level}
+                  </td>
+                  <td className="py-2 px-4 border-b border-gray-300">
+                    {job.salary}
+                  </td>
+                  <td className="py-4 px-4 border-b border-gray-300">
+                    <Link
+                      to={`/jobdetail/${job.id}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      Chi Tiết
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
       <Footter />

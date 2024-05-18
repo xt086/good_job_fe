@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { UserOutlined, LoginOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
 
@@ -66,7 +66,7 @@ const NavEm: React.FC = () => {
               BẮT ĐẦU
             </Button>
           </Link> */}
-          <Link to="/Dangnhap">
+          {/* <Link to="/Dangnhap">
             <Button
               type="primary"
               icon={<UserOutlined />}
@@ -83,7 +83,16 @@ const NavEm: React.FC = () => {
             >
               ĐĂNG KÍ
             </Button>
-          </Link>
+          </Link> */}
+          {/* <Link to="/Dangxuat">
+            <Button
+              className="text-black font-bold"
+              type="primary"
+              icon={<LogoutOutlined />}
+            >
+              ĐĂNG XUẤT
+            </Button>
+          </Link> */}
         </div>
 
         <div className="md:hidden ">

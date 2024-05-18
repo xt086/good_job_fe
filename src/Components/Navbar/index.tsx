@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { UserOutlined, LoginOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined, LoginOutlined } from "@ant-design/icons";
 import { AiOutlineArrowRight } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import client from "../../config";
+import { ToastContainer, toast } from "react-toastify";
 
 const Navbar: React.FC = () => {
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
 
   const showDrawer = () => {
     setVisible(true);
@@ -15,8 +18,25 @@ const Navbar: React.FC = () => {
     setVisible(false);
   };
 
+  const onLogout = async () => {
+    try {
+      await client.post("http://127.0.0.1:8000/user/logout");
+      toast.success("Đăng xuất thành công!");
+      setTimeout(() => {
+        navigate("/Dangnhap");
+      }, 1000);
+    } catch (error) {
+      toast.error(
+        "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập!"
+      );
+      navigate("/Dangnhap");
+    }
+  };
+
   return (
     <nav className="text-black bg-white px-3 font-bold border border-gray-300">
+      <ToastContainer />
+
       <div className="container mx-auto flex justify-between items-center ">
         <div className="flex justify-center items-center space-x-10">
           <a href="/" className="text-white font-bold text-xl">
@@ -78,6 +98,16 @@ const Navbar: React.FC = () => {
               ĐĂNG KÍ
             </Button>
           </Link> */}
+          {/* <Link to="/Dangxuat"> */}
+          <Button
+            className="text-black font-bold"
+            type="primary"
+            icon={<LogoutOutlined />}
+            onClick={onLogout}
+          >
+            ĐĂNG XUẤT
+          </Button>
+          {/* </Link> */}
         </div>
 
         <div className="md:hidden ">
