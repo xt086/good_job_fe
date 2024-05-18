@@ -5,8 +5,9 @@ import { MdWork } from "react-icons/md";
 import { RiGroupFill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
-import client from "../../config"; // Assuming client is axios instance
+import client from "../../config";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
+import { IoIosTime } from "react-icons/io";
 
 interface JobProps {
   id: string;
@@ -21,6 +22,7 @@ interface JobProps {
   major: { name: string }[];
   salary: string;
   description: string;
+  expired_time: string;
 }
 
 const JobDetail: React.FC = () => {
@@ -78,6 +80,10 @@ const JobDetail: React.FC = () => {
                     {job.job_address.street}, {job.job_address.district},{" "}
                     {job.job_address.city}
                   </p>
+                </div>
+                <div className="flex items-center font-medium mb-5 w-full">
+                  <IoIosTime size={24} className="text-gray-600" />
+                  <p className="ml-3">{job.expired_time.split("T")[0]}</p>
                 </div>
                 <div className="flex items-center font-medium mb-5 w-full">
                   <MdWork size={24} className="text-gray-600" />

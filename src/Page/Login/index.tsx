@@ -22,7 +22,7 @@ const Login: React.FC = () => {
       toast.success("Đăng nhập thành công!");
 
       setTimeout(() => {
-        navigate("/Nhatuyendung/Info");
+        navigate("/");
       }, 1000);
     } catch (error) {
       toast.error(
@@ -81,7 +81,7 @@ const Login: React.FC = () => {
               Đăng nhập
             </button>
             <span>Hoặc</span>
-            <Link to="/Dangki">Bạn chưa có tài khoản?</Link>
+            <Link to="/dangki">Bạn chưa có tài khoản?</Link>
             <button
               className="bg-white hover:bg-slate-300 border border-spacing-5 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline flex items-center justify-center gap-2"
               type="button"

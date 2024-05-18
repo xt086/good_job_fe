@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import NavEm from "./Nav";
 import Footter from "../../Components/Footter";
 import client from "../../config";
@@ -15,8 +15,13 @@ const Info = () => {
   const [description, setDescription] = useState("");
   const [level, setLevel] = useState("");
   const [major, setMajor] = useState("");
-  const [applied_jobs, setApplied_jobs] = useState("");
+  const [expired_time, setExpired_time] = useState("");
   const navigate = useNavigate();
+
+  const dateInputRef = useRef<HTMLInputElement>(null);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setExpired_time(e.target.value);
+  };
 
   const onRegisterCompany = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,24 +29,28 @@ const Info = () => {
       street,
       district,
       city,
-      zipcode,
+      zipcode: Number(zipcode),
     };
 
     const jobData = {
-      company_address: addressData,
+      job_address: addressData,
       major: [{ name: major }],
       name,
+      expired_time: `${expired_time}T04:36:47`,
       salary,
       description,
       level,
-      company: "bf9fa127-13f0-45a8-b8f2-9d80bdee66d6",
-      applied_jobs,
+      company: "7f5e58c7-6ebf-48ad-a32c-e87d2d81189f",
     };
     try {
-      await client.post("http://127.0.0.1:8000/jobs/", jobData);
+      const response = await client.post(
+        "http://127.0.0.1:8000/jobs/",
+        jobData
+      );
+      toast.success("Tạo công việc thành công!");
 
       setTimeout(() => {
-        toast.success("Tạo công việc thành công!");
+        navigate("/");
       }, 1000);
     } catch (error) {
       console.error("Error:", error);
@@ -147,7 +156,7 @@ const Info = () => {
                   Tên công ty
                 </label>
                 <input
-                  id="companyName"
+                  id="name"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
                   value={name}
@@ -191,36 +200,45 @@ const Info = () => {
                 >
                   Cấp độ:
                 </label>
-                <input
+                <select
                   id="level"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  type="text"
                   value={level}
                   onChange={(e) => setLevel(e.target.value)}
-                />
+                >
+                  <option value="">Chọn cấp độ</option>
+                  <option value="IN">IN</option>
+                  <option value="FR">FR</option>
+                  <option value="JR">JR</option>
+                  <option value="MD">MD</option>
+                  <option value="SR">SR</option>
+                  <option value="MG">MG</option>
+                  <option value="advanced">CH</option>
+                </select>
               </div>
 
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="applied_jobs"
+                  htmlFor="expired_time"
                 >
-                  Ứng tuyển việc làm
+                  Thời gian hết hạn
                 </label>
-                <input
-                  id="applied_jobs"
+                {/* <input
+                  id="expired_time"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
-                  value={applied_jobs}
-                  onChange={(e) => setApplied_jobs(e.target.value)}
-                />
+                  value={expired_time}
+                  onChange={(e) => setExpired_time(e.target.value)}
+                /> */}
+                <input type="date" onChange={handleChange} ref={dateInputRef} />
               </div>
               <div className="flex items-center justify-center">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  Submit
+                  Đăng ký
                 </button>
               </div>
             </form>

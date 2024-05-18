@@ -1,18 +1,27 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
-// Tạo Axios instance
 const client: AxiosInstance = axios.create({});
 
-// Thời gian chờ tối đa của 1 request: để 10 phút
 client.defaults.timeout = 1000 * 60 * 10;
 
-// Cho phép gửi cookie cùng với mỗi request
 client.defaults.withCredentials = true;
+
+const getCsrfToken = (): string | null => {
+  const name = 'csrftoken';
+  const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+  if (match) {
+    return match[2];
+  }
+  return null;
+};
 
 // Interceptor cho request
 client.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-    // Bạn có thể thêm logic tùy chỉnh cho request ở đây nếu cần
+    const csrfToken = getCsrfToken();
+    if (csrfToken) {
+      config.headers['X-Csrftoken'] = csrfToken;
+    }
     return config;
   },
   (error: any): Promise<never> => {
@@ -23,7 +32,6 @@ client.interceptors.request.use(
 // Interceptor cho response
 client.interceptors.response.use(
   (response: AxiosResponse): AxiosResponse => {
-    // Bạn có thể thêm logic tùy chỉnh cho response ở đây nếu cần
     return response;
   },
   (error: any): Promise<never> => {

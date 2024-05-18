@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { UserOutlined, SolutionOutlined } from "@ant-design/icons";
 
 import { Link } from "react-router-dom";
 
@@ -27,13 +27,13 @@ const NavEm: React.FC = () => {
             />
           </a>
           <div className="hidden md:flex space-x-10">
-            <a href="/Timvieclam" className=" hover:text-gray-300">
+            <a href="/timvieclam" className=" hover:text-gray-300">
               TÌM VIỆC LÀM
             </a>
-            <a href="/Congty" className=" hover:text-gray-300">
+            <a href="/congty" className=" hover:text-gray-300">
               FAQ
             </a>
-            <a href="/Blog" target="_blank" className=" hover:text-gray-300">
+            <a href="/blog" target="_blank" className=" hover:text-gray-300">
               BLOG
             </a>
           </div>
@@ -45,54 +45,16 @@ const NavEm: React.FC = () => {
           </Button>
         </div>
 
-        <div className="md:flex space-x-4 px-2 hidden md:block">
-          {/* <a
-            href="/Nhatuyendung"
-            target="_blank"
-            className=" hover:text-gray-300">
-            <Button
-              type="primary"
-              className="text-black font-bold flex justify-center items-center gap-2">
-              NHÀ TUYỂN DỤNG
-              <AiOutlineArrowRight />
-            </Button>
-          </a> */}
-
-          {/* <Link to="/Nhatuyendung/Info">
+        <div className=" space-x-4 px-2 hidden md:block">
+          <Link to="/nhatuyendung/job">
             <Button
               className="text-black font-bold"
               type="primary"
-              icon={<LoginOutlined />}>
-              BẮT ĐẦU
-            </Button>
-          </Link> */}
-          {/* <Link to="/Dangnhap">
-            <Button
-              type="primary"
-              icon={<UserOutlined />}
-              className="text-black font-bold"
+              icon={<SolutionOutlined />}
             >
-              ĐĂNG NHẬP
+              TẠO CÔNG VIỆC
             </Button>
           </Link>
-          <Link to="/Dangki">
-            <Button
-              className="text-black font-bold"
-              type="primary"
-              icon={<LoginOutlined />}
-            >
-              ĐĂNG KÍ
-            </Button>
-          </Link> */}
-          {/* <Link to="/Dangxuat">
-            <Button
-              className="text-black font-bold"
-              type="primary"
-              icon={<LogoutOutlined />}
-            >
-              ĐĂNG XUẤT
-            </Button>
-          </Link> */}
         </div>
 
         <div className="md:hidden ">
@@ -124,26 +86,32 @@ const NavEm: React.FC = () => {
       >
         <Menu mode="inline">
           <Menu.Item key="1">
-            <Link to="/TImvieclam">TÌM VIỆC LÀM</Link>
+            <Link to="/timvieclam">TÌM VIỆC LÀM</Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/Congty">FAQ</Link>
+            <Link to="/congty">FAQ</Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link to="/Blog">BLOG</Link>
+            <Link to="/blog">BLOG</Link>
           </Menu.Item>
           {/* <Menu.Item key="4">
             <a
               className="flex  items-center gap-2"
-              href="/Nhatuyendung"
+              href="/nhatuyendung"
               target="_blank">
               NHÀ TUYỂN DỤNG
               <AiOutlineArrowRight />
             </a>
           </Menu.Item> */}
-          <Menu.Item key="5">
-            <Link to="/Nhatuyendung/Info">
-              <UserOutlined /> BẮT ĐẦU
+          <Menu.Item key="4">
+            <Link to="/nhatuyendung/job">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<SolutionOutlined />}
+              >
+                TẠO CÔNG VIỆC
+              </Button>
             </Link>
           </Menu.Item>
           {/* <Menu.Item key="6">

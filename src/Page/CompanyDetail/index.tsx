@@ -77,10 +77,9 @@ const CompanyDetail: React.FC = () => {
                 <div className="flex items-center font-medium mb-5 w-full">
                   <FaLocationDot size={24} className="text-gray-600" />
                   <p className="ml-3">
-                    {company.company_address.street}-
-                    {company.company_address.district}-
-                    {company.company_address.city}-
-                    {company.company_address.zipcode}
+                    {company.company_address.street} -{" "}
+                    {company.company_address.district} -{" "}
+                    {company.company_address.city}
                   </p>
                 </div>
                 <div className="flex items-center font-medium mb-5 w-full">

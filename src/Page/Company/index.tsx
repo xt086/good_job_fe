@@ -92,10 +92,9 @@ const CompanyList: React.FC = () => {
                     </Link>
                   </td>
                   <td className="py-2 px-4 border-b border-gray-300">
-                    {company.company_address.street}-
-                    {company.company_address.district}-
-                    {company.company_address.city}-
-                    {company.company_address.zipcode}
+                    {company.company_address.street} -{" "}
+                    {company.company_address.district} -{" "}
+                    {company.company_address.city}
                   </td>
                   <td className="py-2 px-4 border-b border-gray-300">
                     {company.major.map((item, index) => (

@@ -14,7 +14,8 @@ const Footter = () => {
           <dd className="mb-2 first-of-type:pt-2">
             <a
               className="opacity-75 transition-colors hover:opacity-100"
-              href="#timkiem">
+              href="#timkiem"
+            >
               Tìm kiếm
             </a>
           </dd>
@@ -22,7 +23,8 @@ const Footter = () => {
             <a
               rel="noopener noreferrer"
               className="opacity-75 transition-colors hover:opacity-100"
-              href="#chungtoico">
+              href="#chungtoico"
+            >
               Chúng tôi có!
             </a>
           </dd>
@@ -30,7 +32,8 @@ const Footter = () => {
             <a
               rel="noopener noreferrer"
               className="opacity-75 transition-colors hover:opacity-100"
-              href="#truyenthong">
+              href="#truyenthong"
+            >
               Truyền thông
             </a>
           </dd>
@@ -38,7 +41,8 @@ const Footter = () => {
             <a
               rel="noopener noreferrer"
               className="opacity-75 transition-colors hover:opacity-100"
-              href="#congdong">
+              href="#congdong"
+            >
               Cộng đồng
             </a>
           </dd>
@@ -46,7 +50,8 @@ const Footter = () => {
             <a
               rel="noopener noreferrer"
               className="opacity-75 transition-colors hover:opacity-100"
-              href="#nguoidung">
+              href="#nguoidung"
+            >
               Người dùng phản hồi
             </a>
           </dd>
@@ -58,14 +63,16 @@ const Footter = () => {
           <dd className="mb-2 first-of-type:pt-2">
             <a
               className="opacity-75 transition-colors hover:opacity-100"
-              href="/Timvieclam">
+              href="/timvieclam"
+            >
               Tìm việc làm
             </a>
           </dd>
           <dd className="mb-2 first-of-type:pt-2">
             <a
               className="opacity-75 transition-colors hover:opacity-100"
-              href="/Congty">
+              href="/congty"
+            >
               Tìm công ty
             </a>
           </dd>
@@ -73,7 +80,8 @@ const Footter = () => {
             <a
               target="_blank"
               className="opacity-75 transition-colors hover:opacity-100"
-              href="/Blog">
+              href="/blog"
+            >
               Blog
             </a>
           </dd>
@@ -81,7 +89,8 @@ const Footter = () => {
             <a
               target="_blank"
               className="opacity-75 transition-colors hover:opacity-100"
-              href="/Nhatuyendung">
+              href="/nhatuyendung"
+            >
               Nhà tuyển dụng
             </a>
           </dd>

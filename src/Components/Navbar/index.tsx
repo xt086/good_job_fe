@@ -23,13 +23,12 @@ const Navbar: React.FC = () => {
       await client.post("http://127.0.0.1:8000/user/logout");
       toast.success("Đăng xuất thành công!");
       setTimeout(() => {
-        navigate("/Dangnhap");
+        navigate("/dangnhap");
       }, 1000);
     } catch (error) {
       toast.error(
         "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập!"
       );
-      navigate("/Dangnhap");
     }
   };
 
@@ -47,13 +46,13 @@ const Navbar: React.FC = () => {
             />
           </a>
           <div className="hidden md:flex space-x-10">
-            <a href="/Timvieclam" className=" hover:text-gray-300">
+            <a href="/timvieclam" className=" hover:text-gray-300">
               TÌM VIỆC LÀM
             </a>
-            <a href="/Congty" className=" hover:text-gray-300">
+            <a href="/congty" className=" hover:text-gray-300">
               TÌM CÔNG TY
             </a>
-            <a href="/Blog" target="_blank" className=" hover:text-gray-300">
+            <a href="/blog" className=" hover:text-gray-300">
               BLOG
             </a>
           </div>
@@ -65,12 +64,8 @@ const Navbar: React.FC = () => {
           </Button>
         </div>
 
-        <div className="md:flex space-x-4 px-2 hidden md:block">
-          <a
-            href="/Nhatuyendung"
-            target="_blank"
-            className=" hover:text-gray-300"
-          >
+        <div className="md:flex space-x-4 px-2 hidden ">
+          <a href="/nhatuyendung" className=" hover:text-gray-300">
             <Button
               type="primary"
               className="text-black font-bold flex justify-center items-center gap-2"
@@ -79,26 +74,6 @@ const Navbar: React.FC = () => {
               <AiOutlineArrowRight />
             </Button>
           </a>
-
-          {/* <Link to="/Dangnhap">
-            <Button
-              type="primary"
-              icon={<UserOutlined />}
-              className="text-black font-bold"
-            >
-              ĐĂNG NHẬP
-            </Button>
-          </Link>
-          <Link to="/Dangki">
-            <Button
-              className="text-black font-bold"
-              type="primary"
-              icon={<LoginOutlined />}
-            >
-              ĐĂNG KÍ
-            </Button>
-          </Link> */}
-          {/* <Link to="/Dangxuat"> */}
           <Button
             className="text-black font-bold"
             type="primary"
@@ -107,7 +82,6 @@ const Navbar: React.FC = () => {
           >
             ĐĂNG XUẤT
           </Button>
-          {/* </Link> */}
         </div>
 
         <div className="md:hidden ">
@@ -139,18 +113,18 @@ const Navbar: React.FC = () => {
       >
         <Menu mode="inline">
           <Menu.Item key="1">
-            <Link to="/Timvieclam">TÌM VIỆC LÀM</Link>
+            <Link to="/timvieclam">TÌM VIỆC LÀM</Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/Congty">TÌM CÔNG TY</Link>
+            <Link to="/congty">TÌM CÔNG TY</Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link to="/Blog">BLOG</Link>
+            <Link to="/blog">BLOG</Link>
           </Menu.Item>
           <Menu.Item key="4">
             <a
               className="flex  items-center gap-2"
-              href="/Nhatuyendung"
+              href="/nhatuyendung"
               target="_blank"
             >
               NHÀ TUYỂN DỤNG
@@ -158,14 +132,14 @@ const Navbar: React.FC = () => {
             </a>
           </Menu.Item>
           <Menu.Item key="5">
-            <Link to="/Dangnhap">
-              <UserOutlined /> ĐĂNG NHẬP
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="6">
-            <Link to="/Dangki">
-              <LoginOutlined /> ĐĂNG KÍ
-            </Link>
+            <Button
+              className="text-black font-bold"
+              type="primary"
+              icon={<LogoutOutlined />}
+              onClick={onLogout}
+            >
+              ĐĂNG XUẤT
+            </Button>
           </Menu.Item>
         </Menu>
       </Drawer>

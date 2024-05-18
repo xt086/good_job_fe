@@ -51,7 +51,7 @@ const Info = () => {
       toast.success("Tạo công ty thành công!");
 
       setTimeout(() => {
-        navigate("/Nhatuyendung/Job");
+        navigate("/nhatuyendung/job");
       }, 1000);
     } catch (error) {
       toast.error("Tạo công ty thất bại!");
@@ -201,7 +201,7 @@ const Info = () => {
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  Submit
+                  Đăng ký
                 </button>
               </div>
             </form>

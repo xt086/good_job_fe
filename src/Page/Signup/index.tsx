@@ -22,7 +22,7 @@ const Register: React.FC = () => {
       await client.post("http://127.0.0.1:8000/user/register", data);
       toast.success("Đăng ký thành công!");
       setTimeout(() => {
-        navigate("/Dangnhap");
+        navigate("/nhatuyendung/info");
       }, 1000);
     } catch (error) {
       toast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");

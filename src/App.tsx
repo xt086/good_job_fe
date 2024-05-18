@@ -24,18 +24,18 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/Dangnhap" element={<Login />} />
-          <Route path="/Dangki" element={<Singup />} />
-          <Route path="/Congty" element={<Company />} />
-          <Route path="/Profile" element={<Profile />} />
+          <Route path="/dangnhap" element={<Login />} />
+          <Route path="/dangki" element={<Singup />} />
+          <Route path="/congty" element={<Company />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/companydetail/:companyId" element={<CompanyDetail />} />
-          <Route path="/Timvieclam" element={<Job />} />
+          <Route path="/timvieclam" element={<Job />} />
           <Route path="/jobdetail/:jobId" element={<JobDetail />} />
 
-          <Route path="/Blog" element={<Blog />} />
-          <Route path="/Nhatuyendung" element={<Lan />} />
-          <Route path="/Nhatuyendung/Info" element={<Info />} />
-          <Route path="/Nhatuyendung/Job" element={<Job1 />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/nhatuyendung" element={<Lan />} />
+          <Route path="/nhatuyendung/info" element={<Info />} />
+          <Route path="/nhatuyendung/job" element={<Job1 />} />
           {/* <Route path="/Nhatuyendung/Info2" element={<Info2 />} /> */}
         </Routes>
       </Router>
