@@ -5,26 +5,20 @@ import client from "../../config";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-const Info = () => {
+const Employee = () => {
   const navigate = useNavigate();
   const [street, setStreet] = useState("");
   const [district, setDistrict] = useState("");
   const [city, setCity] = useState("");
   const [zipcode, setZipcode] = useState("");
   const [name, setName] = useState("");
-  const [minsalary, setMinsalary] = useState("");
-  const [maxsalary, setMaxsalary] = useState("");
-  const [description, setDescription] = useState("");
+  const [number, setNumber] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [intro, setIntro] = useState("");
   const [level, setLevel] = useState("");
   const [major, setMajor] = useState("");
-  const [expired_time, setExpired_time] = useState("");
-  const [company, setCompany] = useState("");
   const [user, setUser] = useState("");
-
-  const dateInputRef = useRef<HTMLInputElement>(null);
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setExpired_time(e.target.value);
-  };
 
   useEffect(() => {
     const getUserId = async () => {
@@ -37,17 +31,6 @@ const Info = () => {
     getUserId();
   }, []);
 
-  useEffect(() => {
-    const getCompany = async () => {
-      const respone = await client.get(
-        `http://127.0.0.1:8000/company/?userId=${user}`
-      );
-      setCompany(respone.data[0].id);
-    };
-
-    getCompany();
-  }, []);
-
   const onRegisterCompany = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const addressData = {
@@ -57,19 +40,19 @@ const Info = () => {
       zipcode: Number(zipcode),
     };
 
-    const jobData = {
-      job_address: addressData,
+    const employeeData = {
+      employee_address: addressData,
       major: [{ name: major }],
       name,
-      expired_time: `${expired_time}T04:36:47`,
-      min_salary: Number(minsalary),
-      max_salary: Number(maxsalary),
-      description,
+      number: Number(number),
+      gender,
+      age: Number(age),
+      personal_introduction: intro,
       level,
-      company,
+      user,
     };
     try {
-      await client.post("http://127.0.0.1:8000/jobs/", jobData);
+      await client.post("http://127.0.0.1:8000/employee/", employeeData);
       toast.success("Tạo công việc thành công!");
 
       setTimeout(() => {
@@ -176,7 +159,7 @@ const Info = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="name"
                 >
-                  Tên công ty
+                  Tên nhân viên
                 </label>
                 <input
                   id="name"
@@ -186,21 +169,20 @@ const Info = () => {
                   onChange={(e) => setName(e.target.value)}
                 />
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="minsalary"
+                  htmlFor="number"
                 >
-                  Lương:
+                  Số điện thoại
                 </label>
                 <div className="flex gap-2">
                   <input
-                    id="minsalary"
+                    id="number"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
-                    placeholder="Min"
-                    value={minsalary}
-                    onChange={(e) => setMinsalary(e.target.value)}
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
                   />
                   <input
                     id="maxsalary"
@@ -211,21 +193,69 @@ const Info = () => {
                     onChange={(e) => setMaxsalary(e.target.value)}
                   />
                 </div>
+              </div> */}
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="number"
+                >
+                  Số điện thoại:
+                </label>
+                <input
+                  id="number"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
+                  value={number}
+                  onChange={(e) => setNumber(e.target.value)}
+                />
               </div>
 
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="description"
+                  htmlFor="gender"
                 >
-                  Mô tả công việc:
+                  Giới tính:
+                </label>
+                <select
+                  id="gender"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <option value="">Chọn giới tính</option>
+                  <option value="F">Nữ</option>
+                  <option value="M">Nam</option>
+                </select>
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="age"
+                >
+                  Tuổi
                 </label>
                 <input
-                  id="description"
+                  id="age"
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  className="block text-gray-700 text-sm font-bold mb-2"
+                  htmlFor="intro"
+                >
+                  Mô tả bản thân:
+                </label>
+                <input
+                  id="intro"
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  type="text"
+                  value={intro}
+                  onChange={(e) => setIntro(e.target.value)}
                 />
               </div>
               <div className="mb-4">
@@ -252,21 +282,12 @@ const Info = () => {
                 </select>
               </div>
 
-              <div className="mb-4">
-                <label
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                  htmlFor="expired_time"
-                >
-                  Thời gian hết hạn
-                </label>
-                <input type="date" onChange={handleChange} ref={dateInputRef} />
-              </div>
               <div className="flex items-center justify-center">
                 <button
                   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   type="submit"
                 >
-                  Đăng ký
+                  Tạo thông tin
                 </button>
               </div>
             </form>
@@ -278,4 +299,4 @@ const Info = () => {
   );
 };
 
-export default Info;
+export default Employee;

@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { UserOutlined, LogoutOutlined, LoginOutlined } from "@ant-design/icons";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { LogoutOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
-import client from "../../config";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
+import { useAuth } from "../../Context/AuthContext";
 
 const Navbar: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const showDrawer = () => {
     setVisible(true);
@@ -19,17 +19,10 @@ const Navbar: React.FC = () => {
   };
 
   const onLogout = async () => {
-    try {
-      await client.post("http://127.0.0.1:8000/user/logout");
-      toast.success("Đăng xuất thành công!");
-      setTimeout(() => {
-        navigate("/dangnhap");
-      }, 1000);
-    } catch (error) {
-      toast.error(
-        "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập!"
-      );
-    }
+    logout();
+    setTimeout(() => {
+      navigate("/dangnhap");
+    }, 1000);
   };
 
   return (
@@ -67,13 +60,23 @@ const Navbar: React.FC = () => {
         <div className="md:flex space-x-4 px-2 hidden ">
           <a href="/nhatuyendung" className=" hover:text-gray-300">
             <Button
+              className="text-black font-bold"
               type="primary"
-              className="text-black font-bold flex justify-center items-center gap-2"
+              icon={<TeamOutlined />}
             >
               NHÀ TUYỂN DỤNG
-              <AiOutlineArrowRight />
             </Button>
           </a>
+          <a href="/profile" className=" hover:text-gray-300">
+            <Button
+              className="text-black font-bold"
+              type="primary"
+              icon={<UserOutlined />}
+            >
+              CV CÁ NHÂN
+            </Button>
+          </a>
+
           <Button
             className="text-black font-bold"
             type="primary"
@@ -122,14 +125,13 @@ const Navbar: React.FC = () => {
             <Link to="/blog">BLOG</Link>
           </Menu.Item>
           <Menu.Item key="4">
-            <a
-              className="flex  items-center gap-2"
-              href="/nhatuyendung"
-              target="_blank"
+            <Button
+              className="text-black font-bold"
+              type="primary"
+              icon={<TeamOutlined />}
             >
               NHÀ TUYỂN DỤNG
-              <AiOutlineArrowRight />
-            </a>
+            </Button>
           </Menu.Item>
           <Menu.Item key="5">
             <Button

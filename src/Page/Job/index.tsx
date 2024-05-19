@@ -17,7 +17,8 @@ interface JobProps {
   };
   level: string;
   major: { name: string }[];
-  salary: string;
+  min_salary: string;
+  max_salary: string;
 }
 
 const JobsList: React.FC = () => {
@@ -39,7 +40,7 @@ const JobsList: React.FC = () => {
   return (
     <section>
       <Navbar />
-      <div className="container mx-auto">
+      <div className="container mx-auto mb-32">
         <h1 className="text-xl mt-5 md:text-2xl font-semibold ml-4">
           Tin tuyển dụng, việc làm nhanh 24h tại Việt Nam
         </h1>
@@ -73,7 +74,7 @@ const JobsList: React.FC = () => {
                 <tr key={job.id}>
                   <td className="py-2 px-4 border-b border-gray-300">
                     <Link
-                      to={`/jobdetail/${job.id}`}
+                      to={`/chitetvieclam/${job.id}`}
                       className="text-blue-600 hover:underline"
                     >
                       {job.name}
@@ -92,11 +93,11 @@ const JobsList: React.FC = () => {
                     {job.level}
                   </td>
                   <td className="py-2 px-4 border-b border-gray-300">
-                    {job.salary}
+                    {job.min_salary} $ - {job.max_salary} $
                   </td>
                   <td className="py-4 px-4 border-b border-gray-300">
                     <Link
-                      to={`/jobdetail/${job.id}`}
+                      to={`/chitetvieclam/${job.id}`}
                       className="text-blue-600 hover:underline"
                     >
                       Chi Tiết

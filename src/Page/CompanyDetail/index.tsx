@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdWork } from "react-icons/md";
 import { RiGroupFill } from "react-icons/ri";
@@ -99,11 +99,11 @@ const CompanyDetail: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center">
+          <Link className="flex justify-center" to="/timvieclam">
             <button className="uppercase text-2xl bg-yellow-500 hover:bg-yellow-600 text-white py-4 px-8 mb-5 rounded-lg shadow-lg font-bold transition-transform transform hover:scale-105 duration-300">
-              ứng tuyển ngay
+              ỨNG TUYỂN NGAY
             </button>
-          </div>
+          </Link>
         </div>
         <div className="mb-10 border rounded-lg shadow-md md:p-10 p-4 bg-white">
           <h3 className="text-2xl font-semibold mb-4">Thông tin công ty</h3>

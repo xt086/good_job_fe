@@ -1,45 +1,76 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./Components/Navbar";
-import Footter from "./Components/Footter";
 import Landing from "./Page/Landing/Landing";
 import Login from "./Page/Login";
 import Singup from "./Page/Signup";
 import Company from "./Page/Company";
-import CompanyDetail from "./Page/CompanyDetail";
 import Blog from "./Page/Blog";
 import Profile from "./Page/Profile";
 import Lan from "./Page/Employer/Lan";
 import Job from "./Page/Job";
 import Info from "./Page/Employer/Info";
-import NavEm from "./Page/Employer/Nav";
 import Job1 from "./Page/Employer/Job";
-import { AuthContextProvider } from "./Context/AuthContext";
-import { ToastContainer } from "react-toastify";
+import PrivateRoute from "./Context/ProtectRoute";
+import AuthRoute from "./Context/AuthRoute";
+import { AuthProvider } from "./Context/AuthContext";
+import CompanyDetail from "./Page/CompanyDetail";
 import JobDetail from "./Page/JobDetail";
+import Employee from "./Page/Employer/Employee";
+import CV from "./Page/Employer/CV";
 
 const App: React.FC = () => {
   return (
-    <AuthContextProvider>
+    <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/dangnhap" element={<Login />} />
-          <Route path="/dangki" element={<Singup />} />
-          <Route path="/congty" element={<Company />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/companydetail/:companyId" element={<CompanyDetail />} />
-          <Route path="/timvieclam" element={<Job />} />
-          <Route path="/jobdetail/:jobId" element={<JobDetail />} />
+          <Route path="/dangnhap" element={<AuthRoute element={<Login />} />} />
+          <Route path="/dangki" element={<AuthRoute element={<Singup />} />} />
+          <Route path="/" element={<PrivateRoute element={<Landing />} />} />
+          <Route
+            path="/congty"
+            element={<PrivateRoute element={<Company />} />}
+          />
+          <Route
+            path="/profile"
+            element={<PrivateRoute element={<Profile />} />}
+          />
+          <Route
+            path="/chitietcongty/:companyId"
+            element={<PrivateRoute element={<CompanyDetail />} />}
+          />
+          <Route
+            path="/timvieclam"
+            element={<PrivateRoute element={<Job />} />}
+          />
+          <Route
+            path="/chitetvieclam/:jobId"
+            element={<PrivateRoute element={<JobDetail />} />}
+          />
+          <Route path="/blog" element={<PrivateRoute element={<Blog />} />} />
+          <Route
+            path="/nhatuyendung"
+            element={<PrivateRoute element={<Lan />} />}
+          />
+          <Route
+            path="/nhatuyendung/thongtin"
+            element={<PrivateRoute element={<Info />} />}
+          />
+          <Route
+            path="/nguoilaodong"
+            element={<PrivateRoute element={<Employee />} />}
+          />
+          <Route
+            path="/nhatuyendung/congviec"
+            element={<PrivateRoute element={<Job1 />} />}
+          />
 
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/nhatuyendung" element={<Lan />} />
-          <Route path="/nhatuyendung/info" element={<Info />} />
-          <Route path="/nhatuyendung/job" element={<Job1 />} />
-          {/* <Route path="/Nhatuyendung/Info2" element={<Info2 />} /> */}
+          <Route
+            path="/danhsachcv"
+            element={<PrivateRoute element={<CV />} />}
+          />
         </Routes>
       </Router>
-    </AuthContextProvider>
+    </AuthProvider>
   );
 };
 

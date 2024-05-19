@@ -51,7 +51,7 @@ const Info = () => {
       toast.success("Tạo công ty thành công!");
 
       setTimeout(() => {
-        navigate("/nhatuyendung/job");
+        navigate("/nhatuyendung/congviec");
       }, 1000);
     } catch (error) {
       toast.error("Tạo công ty thất bại!");
@@ -60,6 +60,7 @@ const Info = () => {
       // Handle error
     }
   };
+
   return (
     <section>
       <ToastContainer />

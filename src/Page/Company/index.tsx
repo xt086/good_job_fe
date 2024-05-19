@@ -3,7 +3,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
-import { AuthContext } from "../../Context/AuthContext";
 import client from "../../config";
 import Cookies from "js-cookie";
 
@@ -49,7 +48,7 @@ const CompanyList: React.FC = () => {
     <section>
       <Navbar />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-32">
         <h1 className="text-xl mt-5 md:text-2xl font-semibold">
           Thông tin công ty tuyển dụng
         </h1>
@@ -85,7 +84,7 @@ const CompanyList: React.FC = () => {
                 <tr key={company.id}>
                   <td className="py-2 px-4 border-b border-gray-300">
                     <Link
-                      to={`/companydetail/${company.id}`}
+                      to={`/chitietcongty/${company.id}`}
                       className="text-blue-600 hover:underline"
                     >
                       {company.name}
@@ -103,7 +102,7 @@ const CompanyList: React.FC = () => {
                   </td>
                   <td className="py-4 px-4 border-b border-gray-300">
                     <Link
-                      to={`/companydetail/${company.id}`}
+                      to={`/chitietcongty/${company.id}`}
                       className="text-blue-600 hover:underline"
                     >
                       Chi Tiết

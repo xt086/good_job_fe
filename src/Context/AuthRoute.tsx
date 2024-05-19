@@ -2,18 +2,19 @@ import React from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 
-interface PrivateRouteProps {
+interface AuthRouteProps {
   element: React.ReactNode;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
+const AuthRoute: React.FC<AuthRouteProps> = ({ element }) => {
   const { user } = useAuth();
   const storedUser = localStorage.getItem("user");
-  if (!storedUser && !user) {
-    return <Navigate to="/dangnhap" />;
+
+  if (user || storedUser) {
+    return <Navigate to="/" />;
   }
 
   return <>{element}</>;
 };
 
-export default PrivateRoute;
+export default AuthRoute;

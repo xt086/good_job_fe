@@ -2,12 +2,13 @@ import React from "react";
 import { FaPhone } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
 import { MdLocationPin } from "react-icons/md";
-const Footter = () => {
+
+const Footer = () => {
   return (
-    <footer className="relative bg-top bg-[#1c1c1c]  flex w-full items-center justify-center overflow-hidden  px-4 pb-12 pt-12 md:px-10 md:pb-44 md:pt-20 ">
+    <footer className="bg-[#1c1c1c] w-full overflow-hidden px-4 pb-12 pt-12 md:px-10 md:pb-44 md:pt-20 relative bottom-0 left-0">
       <div className="absolute h-full w-full brightness-75"></div>
-      <div className="z-10 flex w-full max-w-5xl flex-col gap-y-12 font-medium text-white md:flex-row text-left">
-        <dl className="w-full ">
+      <div className="relative z-10 flex w-full max-w-5xl flex-col gap-y-12 font-medium text-white md:flex-row text-left">
+        <dl className="w-full">
           <dt className="mb-1 border-b-2 border-white/10 pb-2 text-2xl font-semibold md:border-none md:pb-1 md:text-xl">
             Giới thiệu
           </dt>
@@ -112,11 +113,11 @@ const Footter = () => {
           </dd>
         </dl>
         <div className="w-full md:min-w-[360px]">
-          <img src="./svg/logo.svg" alt="" />
+          <img src="./svg/logo.svg" alt="Logo" />
           <p className="mt-4 opacity-75">
             Giúp người dùng có những trải nghiệm tốt nhất cùng Spicy. Hãy phản
             hồi lại những thắc mắc và thiếu xót lại với chúng tôi để có những
-            đánh giá 1 cách chi tiết nhất. Xin cảm ơn !
+            đánh giá 1 cách chi tiết nhất. Xin cảm ơn!
           </p>
           <div className="mt-4 flex items-center justify-between gap-6 md:justify-start">
             <p className="text-sm opacity-75">
@@ -129,4 +130,4 @@ const Footter = () => {
   );
 };
 
-export default Footter;
+export default Footer;

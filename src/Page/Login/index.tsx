@@ -1,35 +1,21 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import Cookies from "js-cookie";
-import client from "../../config";
+import { ToastContainer } from "react-toastify";
+import { useAuth } from "../../Context/AuthContext";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [checkLogin, setCheckLogin] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await client.post("http://127.0.0.1:8000/user/login", {
-        email: email,
-        password: password,
-      });
-      setCheckLogin(true);
-      toast.success("Đăng nhập thành công!");
-
-      setTimeout(() => {
-        navigate("/");
-      }, 1000);
-    } catch (error) {
-      toast.error(
-        "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập!"
-      );
-      setCheckLogin(false);
-    }
+    login(email, password);
+    setTimeout(() => {
+      navigate("/");
+    }, 1000);
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import client from "../../config";
@@ -22,7 +22,7 @@ const Register: React.FC = () => {
       await client.post("http://127.0.0.1:8000/user/register", data);
       toast.success("Đăng ký thành công!");
       setTimeout(() => {
-        navigate("/nhatuyendung/info");
+        navigate("/nhatuyendung/thongtin");
       }, 1000);
     } catch (error) {
       toast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");

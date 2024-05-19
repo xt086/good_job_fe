@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdWork } from "react-icons/md";
 import { RiGroupFill, RiMoneyDollarCircleFill } from "react-icons/ri";
@@ -8,9 +8,10 @@ import Footter from "../../Components/Footter";
 import client from "../../config";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
 import { IoIosTime } from "react-icons/io";
+import { toast } from "react-toastify";
 
 interface JobProps {
-  id: string;
+  id: any;
   name: string;
   job_address: {
     street: string;
@@ -20,16 +21,19 @@ interface JobProps {
   };
   level: string;
   major: { name: string }[];
-  salary: string;
+  min_salary: string;
+  max_salary: string;
   description: string;
   expired_time: string;
 }
 
 const JobDetail: React.FC = () => {
-  const { jobId } = useParams<{ jobId: string }>();
+  const navigate = useNavigate();
+  const { jobId } = useParams<{ jobId: string | any }>();
   const [job, setJob] = useState<JobProps | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
+  const [user, setUser] = useState("");
+  const [employee, setEmployee] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchJobDetails = async () => {
@@ -38,27 +42,76 @@ const JobDetail: React.FC = () => {
           `http://127.0.0.1:8000/jobs/${jobId}/`
         );
         setJob(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError("Công việc không tồn tại");
-        setLoading(false);
-      }
+      } catch (err) {}
     };
 
     fetchJobDetails();
   }, [jobId]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    const getUserId = async () => {
+      try {
+        const response = await client.get(`http://127.0.0.1:8000/user/user`);
+        setUser(response.data.user.id);
+      } catch (err) {}
+    };
 
-  if (error) {
-    return <div>{error}</div>;
-  }
+    getUserId();
+  }, []);
+
+  useEffect(() => {
+    const getEmployee = async () => {
+      try {
+        const response = await client.get(
+          `http://127.0.0.1:8000/employee/?userId=${user}`
+        );
+
+        if (response.data && response.data.length > 0) {
+          setEmployee(response.data[0].id);
+        } else {
+          console.error("Empty response or invalid data structure");
+        }
+      } catch (error) {
+        console.error("Error fetching employee data:", error);
+      }
+    };
+    getEmployee();
+  }, []);
 
   if (!job) {
     return null;
   }
+
+  const onApply = async () => {
+    if (!file) {
+      toast.error("Vui lòng chọn tệp CV trước khi ứng tuyển!");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("employeeId", employee);
+    formData.append("jobId", jobId);
+    formData.append("file", file);
+
+    try {
+      await client.post("http://127.0.0.1:8000/upload", formData);
+      toast.success("Ứng tuyển công việc thành công!");
+
+      setTimeout(() => {
+        navigate("/chitetvieclam");
+      }, 1000);
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error("Ứng tuyển công việc thất bại!");
+    }
+  };
+
+  const onFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const uploadedFile = event.target.files[0];
+      setFile(uploadedFile);
+    }
+  };
 
   return (
     <section>
@@ -104,7 +157,10 @@ const JobDetail: React.FC = () => {
                     size={24}
                     className="text-gray-600"
                   />
-                  <p className="ml-3">{job.salary}</p>
+                  <p className="ml-3">
+                    {" "}
+                    {job.min_salary} $ - {job.max_salary} $
+                  </p>
                 </div>
                 <div className="flex items-center font-medium mb-5 w-full">
                   <BiSolidMessageAltDetail
@@ -116,9 +172,25 @@ const JobDetail: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="flex justify-center">
-            <button className="uppercase text-2xl bg-yellow-500 hover:bg-yellow-600 text-white py-4 px-8 mb-5 rounded-lg shadow-lg font-bold transition-transform transform hover:scale-105 duration-300">
-              ứng tuyển ngay
+          <div className="flex flex-col items-center">
+            <input
+              type="file"
+              className="hidden"
+              id="file-upload"
+              accept="application/pdf"
+              onChange={onFileUpload}
+            />
+            <label
+              htmlFor="file-upload"
+              className="uppercase text-2xl bg-blue-500 hover:bg-blue-600 text-white py-4 px-8 rounded-lg shadow-lg font-bold transition-transform transform hover:scale-105 duration-300 cursor-pointer"
+            >
+              {file ? file.name : "Tải tệp lên"}
+            </label>
+            <button
+              className="uppercase text-2xl bg-yellow-500 hover:bg-yellow-600 text-white py-4 px-8 mt-5 rounded-lg shadow-lg font-bold transition-transform transform hover:scale-105 duration-300"
+              onClick={onApply}
+            >
+              Ứng tuyển ngay
             </button>
           </div>
         </div>

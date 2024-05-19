@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { UserOutlined, SolutionOutlined } from "@ant-design/icons";
-
+import { SolutionOutlined, ContainerOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
 const NavEm: React.FC = () => {
@@ -46,7 +45,16 @@ const NavEm: React.FC = () => {
         </div>
 
         <div className=" space-x-4 px-2 hidden md:block">
-          <Link to="/nhatuyendung/job">
+          <Link to="/danhsachcv">
+            <Button
+              className="text-black font-bold"
+              type="primary"
+              icon={<ContainerOutlined />}
+            >
+              DANH SÁCH HỒ SƠ ỨNG VIÊN
+            </Button>
+          </Link>
+          <Link to="/nhatuyendung/congviec">
             <Button
               className="text-black font-bold"
               type="primary"
@@ -94,17 +102,19 @@ const NavEm: React.FC = () => {
           <Menu.Item key="3">
             <Link to="/blog">BLOG</Link>
           </Menu.Item>
-          {/* <Menu.Item key="4">
-            <a
-              className="flex  items-center gap-2"
-              href="/nhatuyendung"
-              target="_blank">
-              NHÀ TUYỂN DỤNG
-              <AiOutlineArrowRight />
-            </a>
-          </Menu.Item> */}
           <Menu.Item key="4">
-            <Link to="/nhatuyendung/job">
+            <Link to="/danhsachcv">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<ContainerOutlined />}
+              >
+                DANH SÁCH HỒ SƠ ỨNG VIÊN
+              </Button>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="5">
+            <Link to="/nhatuyendung/congviec">
               <Button
                 className="text-black font-bold"
                 type="primary"
@@ -114,11 +124,6 @@ const NavEm: React.FC = () => {
               </Button>
             </Link>
           </Menu.Item>
-          {/* <Menu.Item key="6">
-            <Link to="/Dangki">
-              <LoginOutlined /> ĐĂNG KÍ
-            </Link>
-          </Menu.Item> */}
         </Menu>
       </Drawer>
     </nav>
