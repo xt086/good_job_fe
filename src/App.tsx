@@ -18,6 +18,7 @@ import JobDetail from "./Page/JobDetail";
 import Employee from "./Page/Employer/Employee";
 import CV from "./Page/Employer/CV";
 import { ToastContainer } from "react-toastify";
+import CvDetail from "./Page/Employer/CVDeitail";
 
 const App: React.FC = () => {
   return (
@@ -69,6 +70,10 @@ const App: React.FC = () => {
           <Route
             path="/danhsachcv"
             element={<PrivateRoute element={<CV />} />}
+          />
+          <Route
+            path="/chitietcv"
+            element={<PrivateRoute element={<CvDetail />} />}
           />
         </Routes>
       </Router>

@@ -5,8 +5,8 @@ import { MdWork } from "react-icons/md";
 import { RiGroupFill } from "react-icons/ri";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
-import client from "../../config";
 import { CompanyDetailProps } from "../../types";
+import client from "../../config";
 
 const CompanyDetail: React.FC = () => {
   const { companyId } = useParams<{ companyId: string }>();

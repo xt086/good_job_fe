@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavEm from "./Nav";
 import Footter from "../../Components/Footter";
-import client from "../../config";
 import { ToastContainer, toast } from "react-toastify";
+import client from "../../config";
 
 const Info = () => {
   const [street, setStreet] = useState("");

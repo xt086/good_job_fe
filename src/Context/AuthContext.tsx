@@ -5,8 +5,8 @@ import React, {
   useState,
   useEffect,
 } from "react";
-import client from "../config";
 import { toast } from "react-toastify";
+import client from "../config";
 
 interface User {
   email: string;

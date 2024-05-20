@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { FaLocationDot } from "react-icons/fa6";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
-import client from "../../config";
 import { Link } from "react-router-dom";
 import { JobProps } from "../../types";
+import client from "../../config";
 
 const JobsList: React.FC = () => {
   const [jobs, setJobs] = useState<JobProps[]>([]);

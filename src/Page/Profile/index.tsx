@@ -1,5 +1,4 @@
 // import React, { useState, useEffect } from "react";
-// import client from "../../config";
 
 // interface ProfileData {
 //   avatar: string;

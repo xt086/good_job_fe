@@ -4,78 +4,30 @@ import { MdWork } from "react-icons/md";
 import { RiGroupFill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { IoIosTime } from "react-icons/io";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
+import { useParams } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
 import { JobDetailProps } from "../../types";
 import client from "../../config";
-import { useNavigate } from "react-router-dom";
 
-const CV: React.FC = () => {
-  const navigate = useNavigate();
-  const [file, setFile] = useState<File | null>(null);
-  const [user, setUser] = useState("");
-  const [company, setCompany] = useState("");
-  const [job, setJob] = useState("");
+const CvDetail: React.FC = () => {
+  const { jobId } = useParams();
   const [listJob, setListJob] = useState<JobDetailProps[]>([]);
+  const [file, setFile] = useState([]);
 
-  const getUserId = useCallback(async () => {
-    try {
-      const response = await client.get(`http://127.0.0.1:8000/user/user`);
-      setUser(response.data.user.id);
-    } catch (err) {
-      console.error(err);
-    }
+  useEffect(() => {
+    const getListFile = async () => {
+      try {
+        const response = await client.get(
+          `http://127.0.0.1:8000/get-file?jobId=${jobId}`
+        );
+        setFile(response.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getListFile();
   }, []);
-
-  const getCompany = useCallback(async () => {
-    if (user) {
-      try {
-        const response = await client.get(
-          `http://127.0.0.1:8000/company/?userId=${user}`
-        );
-        setCompany(response.data[0].id);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  }, [user]);
-
-  const getJobs = useCallback(async () => {
-    if (company) {
-      try {
-        const response = await client.get(
-          `http://127.0.0.1:8000/jobs/?companyId=${company}`
-        );
-        setJob(response.data[0].id);
-        setListJob(response.data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-  }, [company]);
-
-  // const getListFile = async (jobid: any) => {
-  //   try {
-  //     const response = await client.get(
-  //       `http://127.0.0.1:8000/get-file?jobId=${jobid}`
-  //     );
-  //     setFile(response.data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
-  useEffect(() => {
-    getUserId();
-  }, [getUserId]);
-
-  useEffect(() => {
-    getCompany();
-  }, [getCompany]);
-
-  useEffect(() => {
-    getJobs();
-  }, [getJobs]);
 
   return (
     <section>
@@ -137,15 +89,9 @@ const CV: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {/* <button
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                // onClick={() => getListFile(job.id)}
-              >
-                Xem danh sách CV
-              </button> */}
               <button
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                onClick={() => navigate(`/chitietcv/${job.id}`)}
+                // onClick={() => getListFile(job.id)}
               >
                 Xem danh sách CV
               </button>
@@ -158,4 +104,4 @@ const CV: React.FC = () => {
   );
 };
 
-export default CV;
+export default CvDetail;

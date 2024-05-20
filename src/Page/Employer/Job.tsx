@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import NavEm from "./Nav";
 import Footter from "../../Components/Footter";
-import client from "../../config";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import client from "../../config";
 
 const Info = () => {
   const navigate = useNavigate();

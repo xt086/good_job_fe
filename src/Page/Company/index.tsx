@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
-import client from "../../config";
 import { FaLocationDot } from "react-icons/fa6";
 import { CompanyProps } from "../../types";
+import client from "../../config";
 
 const CompanyList: React.FC = () => {
   const [companies, setCompanies] = useState<CompanyProps[]>([]);

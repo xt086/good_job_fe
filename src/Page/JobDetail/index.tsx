@@ -5,11 +5,11 @@ import { MdWork } from "react-icons/md";
 import { RiGroupFill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
-import client from "../../config";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
 import { IoIosTime } from "react-icons/io";
 import { toast } from "react-toastify";
 import { JobDetailProps } from "../../types";
+import client from "../../config";
 
 const JobDetail: React.FC = () => {
   const navigate = useNavigate();
