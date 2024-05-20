@@ -15,6 +15,7 @@
     "axios": "^1.6.8",
     "i": "^0.3.7",
     "js-cookie": "^3.0.5",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
@@ -26,7 +27,8 @@
     "react-toastify": "^10.0.5",
     "typescript": "^4.9.5",
     "universal-cookie": "^7.1.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xml2js": "^0.6.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -53,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@types/xml2js": "^0.4.14",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",

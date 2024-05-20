@@ -62,10 +62,10 @@ const NavEm: React.FC = () => {
             />
           </a>
           <div className="hidden md:flex space-x-10">
-            {/* <a href="/timvieclam" className=" hover:text-gray-300">
+            <a href="/" className=" hover:text-gray-300">
               TÌM VIỆC LÀM
             </a>
-            <a href="/congty" className=" hover:text-gray-300">
+            {/* <a href="/congty" className=" hover:text-gray-300">
               FAQ
             </a> */}
             <a href="/blog" target="_blank" className=" hover:text-gray-300">
@@ -142,29 +142,6 @@ const NavEm: React.FC = () => {
           </div>
         )}
 
-        {/* {!user && (
-          <>
-            <a href="/dangnhap" className=" hover:text-gray-300">
-              <Button
-                className="text-black font-bold"
-                type="primary"
-                // icon={<UserOutlined />}
-              >
-                ĐĂNG NHẬP
-              </Button>
-            </a>
-            <a href="/dangki" className=" hover:text-gray-300">
-              <Button
-                className="text-black font-bold"
-                type="primary"
-                // icon={<UserOutlined />}
-              >
-                ĐĂNG KÝ
-              </Button>
-            </a>
-          </>
-        )} */}
-
         <div className="md:hidden ">
           <button className="" onClick={showDrawer}>
             <svg
@@ -193,48 +170,86 @@ const NavEm: React.FC = () => {
         visible={visible}
       >
         <Menu mode="inline">
-          {/* <Menu.Item key="1">
-            <Link to="/timvieclam">TÌM VIỆC LÀM</Link>
-          </Menu.Item> */}
-          {/* <Menu.Item key="2">
-            <Link to="/congty">FAQ</Link>
-          </Menu.Item> */}
           <Menu.Item key="1">
-            <Link to="/blog">BLOG</Link>
+            <Link to="/">TÌM VIỆC LÀM</Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/danhsachcv">
-              <Button
-                className="text-black font-bold"
-                type="primary"
-                icon={<ContainerOutlined />}
-              >
-                DANH SÁCH CÔNG VIỆC
-              </Button>
-            </Link>
+            <Link to="/blog">BLOG</Link>
           </Menu.Item>
-          <Menu.Item key="3">
-            <Link to="/nhatuyendung/thongtin">
-              <Button
-                className="text-black font-bold"
-                type="primary"
-                icon={<UnorderedListOutlined />}
-              >
-                TẠO NHÀ TUYỂN DỤNG
-              </Button>
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="4">
-            <Link to="/nhatuyendung/congviec">
-              <Button
-                className="text-black font-bold"
-                type="primary"
-                icon={<SolutionOutlined />}
-              >
-                TẠO CÔNG VIỆC
-              </Button>
-            </Link>
-          </Menu.Item>
+          {!user && (
+            <>
+              <Menu.Item key="4">
+                <Link to="/dangnhap-nhatuyendung">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<UserOutlined />}
+                  >
+                    ĐĂNG NHẬP
+                  </Button>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="5">
+                <Link to="/dangki-nhatuyendung">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<UserOutlined />}
+                  >
+                    ĐĂNG KÝ
+                  </Button>
+                </Link>
+              </Menu.Item>
+            </>
+          )}
+
+          {user && (
+            <>
+              <Menu.Item key="3">
+                <Link to="/danhsachcv">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<ContainerOutlined />}
+                  >
+                    DANH SÁCH CÔNG VIỆC
+                  </Button>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="6">
+                <Link to="/danhsachcv">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<ContainerOutlined />}
+                  >
+                    DANH SÁCH CÔNG VIỆC
+                  </Button>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="7">
+                <Link to="/nhatuyendung/thongtin">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<UnorderedListOutlined />}
+                  >
+                    TẠO NHÀ TUYỂN DỤNG
+                  </Button>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="8">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<LogoutOutlined />}
+                  onClick={onLogout}
+                >
+                  ĐĂNG XUẤT
+                </Button>
+              </Menu.Item>
+            </>
+          )}
         </Menu>
       </Drawer>
     </nav>

@@ -154,17 +154,40 @@ const Navbar: React.FC = () => {
               NHÀ TUYỂN DỤNG
             </Button>
           </Menu.Item>
-          <Menu.Item key="5">
-            <Button
-              className="text-black font-bold"
-              type="primary"
-              icon={<UserOutlined />}
-            >
-              TẠO THÔNG TIN CÁ NHÂN
-            </Button>
-          </Menu.Item>
+          {!user && (
+            <>
+              <Menu.Item key="5">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  TẠO THÔNG TIN CÁ NHÂN
+                </Button>
+              </Menu.Item>
+              <Menu.Item key="6">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<TeamOutlined />}
+                >
+                  ĐĂNG NHẬP
+                </Button>
+              </Menu.Item>
+              <Menu.Item key="7">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  ĐĂNG KÝ
+                </Button>
+              </Menu.Item>
+            </>
+          )}
+
           {user && (
-            <Menu.Item key="6">
+            <Menu.Item key="8">
               <Button
                 className="text-black font-bold"
                 type="primary"
