@@ -163,7 +163,6 @@ const CVUploader: React.FC = () => {
       formDataToSend.append("age", age.toString());
       formDataToSend.append("cv", cv);
 
-      // Gửi dữ liệu lên server
       const response = await axios.post("URL_CUA_API", formDataToSend, {
         headers: {
           "Content-Type": "multipart/form-data",

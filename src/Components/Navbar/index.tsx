@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
 import { LogoutOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "../../Context/AuthContext";
 
 const Navbar: React.FC = () => {
   const [visible, setVisible] = useState(false);
-  const navigate = useNavigate();
   const { logout } = useAuth();
 
   const showDrawer = () => {
@@ -20,9 +19,6 @@ const Navbar: React.FC = () => {
 
   const onLogout = async () => {
     logout();
-    setTimeout(() => {
-      navigate("/dangnhap");
-    }, 1000);
   };
 
   return (
@@ -67,13 +63,13 @@ const Navbar: React.FC = () => {
               NHÀ TUYỂN DỤNG
             </Button>
           </a>
-          <a href="/profile" className=" hover:text-gray-300">
+          <a href="/nguoilaodong" className=" hover:text-gray-300">
             <Button
               className="text-black font-bold"
               type="primary"
               icon={<UserOutlined />}
             >
-              CV CÁ NHÂN
+              TẠO THÔNG TIN CÁ NHÂN
             </Button>
           </a>
 
@@ -133,7 +129,17 @@ const Navbar: React.FC = () => {
               NHÀ TUYỂN DỤNG
             </Button>
           </Menu.Item>
+
           <Menu.Item key="5">
+            <Button
+              className="text-black font-bold"
+              type="primary"
+              icon={<UserOutlined />}
+            >
+              TẠO THÔNG TIN CÁ NHÂN
+            </Button>
+          </Menu.Item>
+          <Menu.Item key="6">
             <Button
               className="text-black font-bold"
               type="primary"

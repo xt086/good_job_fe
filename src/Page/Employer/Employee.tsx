@@ -65,13 +65,13 @@ const Employee = () => {
   };
   return (
     <section>
-      <div className="container mx-auto">
+      <div className=" mx-auto">
         <ToastContainer />
 
         <NavEm />
 
         <h2 className="text-center text-xl uppercase font-semibold mt-5 mb-5">
-          Tạo việc làm
+          Tạo thông tin cá nhân
         </h2>
         <div className="flex justify-center items-center h-auto mt-5 mb-5">
           <div className="w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl">

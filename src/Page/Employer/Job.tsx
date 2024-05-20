@@ -46,7 +46,7 @@ const Info = () => {
     };
 
     getCompany();
-  }, []);
+  }, [user]);
 
   const onRegisterCompany = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

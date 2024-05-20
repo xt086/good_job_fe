@@ -10,7 +10,6 @@ import { toast } from "react-toastify";
 
 interface User {
   email: string;
-  // Thêm các trường thông tin người dùng khác nếu cần
 }
 
 interface AuthContextType {
@@ -49,10 +48,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         email,
         password,
       });
-
-      setUser(response.data.email);
       toast.success("Đăng nhập thành công!");
-
+      setUser(response.data.email);
       localStorage.setItem("user", response.data.email);
     } catch (error) {
       toast.error(
@@ -67,11 +64,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       toast.success("Đăng xuất thành công!");
       setUser(null);
       localStorage.removeItem("user");
-    } catch (error) {
-      toast.error(
-        "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập!"
-      );
-    }
+    } catch (error) {}
   };
 
   return (

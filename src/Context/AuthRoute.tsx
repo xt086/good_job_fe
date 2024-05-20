@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
 
@@ -9,8 +9,19 @@ interface AuthRouteProps {
 const AuthRoute: React.FC<AuthRouteProps> = ({ element }) => {
   const { user } = useAuth();
   const storedUser = localStorage.getItem("user");
+  const [redirect, setRedirect] = useState(false);
 
-  if (user || storedUser) {
+  useEffect(() => {
+    if (storedUser && user) {
+      const timeout = setTimeout(() => {
+        setRedirect(true);
+      }, 1000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [storedUser, user]);
+
+  if (redirect) {
     return <Navigate to="/" />;
   }
 

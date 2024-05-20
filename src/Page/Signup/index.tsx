@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import client from "../../config";
 
 const Register: React.FC = () => {
@@ -31,10 +30,79 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <ToastContainer />
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold mb-4">Đăng ký tài khoản</h2>
+    // <div className="min-h-screen flex justify-center items-center bg-gray-100">
+    //   <ToastContainer />
+    //   <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    //     <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+    //       Đăng ký tài khoản
+    //     </h2>
+    //     <form onSubmit={onRegister}>
+    //       <div className="mb-6">
+    //         <label
+    //           className="block text-gray-700 text-sm font-bold mb-2"
+    //           htmlFor="email"
+    //         >
+    //           Email
+    //         </label>
+    //         <input
+    //           className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
+    //           id="email"
+    //           type="email"
+    //           name="email"
+    //           value={email}
+    //           onChange={(e) => setEmail(e.target.value)}
+    //           placeholder="Nhập email của bạn"
+    //         />
+    //       </div>
+    //       <div className="mb-6">
+    //         <label
+    //           className="block text-gray-700 text-sm font-bold mb-2"
+    //           htmlFor="username"
+    //         >
+    //           Tên người dùng
+    //         </label>
+    //         <input
+    //           className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
+    //           id="username"
+    //           type="text"
+    //           name="username"
+    //           value={username}
+    //           onChange={(e) => setUsername(e.target.value)}
+    //           placeholder="Nhập tên người dùng"
+    //         />
+    //       </div>
+    //       <div className="mb-6">
+    //         <label
+    //           className="block text-gray-700 text-sm font-bold mb-2"
+    //           htmlFor="password"
+    //         >
+    //           Mật khẩu
+    //         </label>
+    //         <input
+    //           className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
+    //           id="password"
+    //           type="password"
+    //           name="password"
+    //           value={password}
+    //           onChange={(e) => setPassword(e.target.value)}
+    //           placeholder="Nhập mật khẩu"
+    //         />
+    //       </div>
+    //       <button
+    //         className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline transition duration-200 w-full"
+    //         type="submit"
+    //       >
+    //         Đăng ký
+    //       </button>
+    //     </form>
+    //   </div>
+    // </div>
+    <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-500 to-purple-600">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
+        <ToastContainer />
+        <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
+          Đăng nhập Spicy để tiếp tục
+        </h2>
         <form onSubmit={onRegister}>
           <div className="mb-4">
             <label
@@ -44,33 +112,15 @@ const Register: React.FC = () => {
               Email
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
               id="email"
               type="email"
-              name="email"
+              placeholder="Nhập email của bạn"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Nhập email của bạn"
             />
           </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Tên người dùng
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Nhập tên người dùng"
-            />
-          </div>
-          <div className="mb-4">
+          <div className="mb-6">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="password"
@@ -78,21 +128,29 @@ const Register: React.FC = () => {
               Mật khẩu
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
               id="password"
               type="password"
-              name="password"
+              placeholder="Nhập mật khẩu của bạn"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Nhập mật khẩu"
             />
           </div>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="submit"
-          >
-            Đăng ký
-          </button>
+          <div className="flex flex-col gap-4 items-center justify-between">
+            <button
+              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200 w-full"
+              type="submit"
+            >
+              Đăng nhập
+            </button>
+            <span className="text-gray-600">Hoặc</span>
+            <Link
+              to="/dangnhap"
+              className="text-blue-600 hover:underline transition duration-200"
+            >
+              Bạn đã có tài khoản?
+            </Link>
+          </div>
         </form>
       </div>
     </div>

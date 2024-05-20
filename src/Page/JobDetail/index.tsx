@@ -9,28 +9,12 @@ import client from "../../config";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
 import { IoIosTime } from "react-icons/io";
 import { toast } from "react-toastify";
-
-interface JobProps {
-  id: any;
-  name: string;
-  job_address: {
-    street: string;
-    district: string;
-    city: string;
-    zipcode: string;
-  };
-  level: string;
-  major: { name: string }[];
-  min_salary: string;
-  max_salary: string;
-  description: string;
-  expired_time: string;
-}
+import { JobDetailProps } from "../../types";
 
 const JobDetail: React.FC = () => {
   const navigate = useNavigate();
   const { jobId } = useParams<{ jobId: string | any }>();
-  const [job, setJob] = useState<JobProps | null>(null);
+  const [job, setJob] = useState<JobDetailProps | null>(null);
   const [user, setUser] = useState("");
   const [employee, setEmployee] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -76,7 +60,7 @@ const JobDetail: React.FC = () => {
       }
     };
     getEmployee();
-  }, []);
+  }, [user]);
 
   if (!job) {
     return null;
@@ -98,7 +82,7 @@ const JobDetail: React.FC = () => {
       toast.success("Ứng tuyển công việc thành công!");
 
       setTimeout(() => {
-        navigate("/chitetvieclam");
+        navigate("/timvieclam");
       }, 1000);
     } catch (error) {
       console.error("Error:", error);

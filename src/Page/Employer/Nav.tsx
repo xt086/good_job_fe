@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { SolutionOutlined, ContainerOutlined } from "@ant-design/icons";
+import {
+  SolutionOutlined,
+  ContainerOutlined,
+  UnorderedListOutlined,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const NavEm: React.FC = () => {
   const [visible, setVisible] = useState(false);
@@ -16,6 +21,8 @@ const NavEm: React.FC = () => {
 
   return (
     <nav className="text-black bg-white px-3 font-bold border border-gray-300">
+      <ToastContainer />
+
       <div className="container mx-auto flex justify-between items-center ">
         <div className="flex justify-center items-center space-x-10">
           <a href="/" className="text-white font-bold text-xl">
@@ -52,6 +59,15 @@ const NavEm: React.FC = () => {
               icon={<ContainerOutlined />}
             >
               DANH SÁCH HỒ SƠ ỨNG VIÊN
+            </Button>
+          </Link>
+          <Link to="/nhatuyendung/thongtin">
+            <Button
+              className="text-black font-bold"
+              type="primary"
+              icon={<UnorderedListOutlined />}
+            >
+              TẠO NHÀ TUYỂN DỤNG
             </Button>
           </Link>
           <Link to="/nhatuyendung/congviec">
@@ -114,6 +130,17 @@ const NavEm: React.FC = () => {
             </Link>
           </Menu.Item>
           <Menu.Item key="5">
+            <Link to="/nhatuyendung/thongtin">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<UnorderedListOutlined />}
+              >
+                TẠO NHÀ TUYỂN DỤNG
+              </Button>
+            </Link>
+          </Menu.Item>
+          <Menu.Item key="6">
             <Link to="/nhatuyendung/congviec">
               <Button
                 className="text-black font-bold"

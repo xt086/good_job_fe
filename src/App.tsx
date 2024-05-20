@@ -17,10 +17,12 @@ import CompanyDetail from "./Page/CompanyDetail";
 import JobDetail from "./Page/JobDetail";
 import Employee from "./Page/Employer/Employee";
 import CV from "./Page/Employer/CV";
+import { ToastContainer } from "react-toastify";
 
 const App: React.FC = () => {
   return (
     <AuthProvider>
+      <ToastContainer />
       <Router>
         <Routes>
           <Route path="/dangnhap" element={<AuthRoute element={<Login />} />} />

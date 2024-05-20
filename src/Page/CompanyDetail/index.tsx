@@ -5,29 +5,12 @@ import { MdWork } from "react-icons/md";
 import { RiGroupFill } from "react-icons/ri";
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
-import axios from "axios";
-import client from "../../config"; // Assuming client is axios instance
-
-interface Company {
-  id: string;
-  name: string;
-  company_address: {
-    street: string;
-    district: string;
-    city: string;
-    zipcode: string;
-  };
-  major: [
-    {
-      name: string;
-    },
-  ];
-  personal_introduction: string;
-}
+import client from "../../config";
+import { CompanyDetailProps } from "../../types";
 
 const CompanyDetail: React.FC = () => {
   const { companyId } = useParams<{ companyId: string }>();
-  const [company, setCompany] = useState<Company | null>(null);
+  const [company, setCompany] = useState<CompanyDetailProps | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
 
