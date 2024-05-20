@@ -71,8 +71,9 @@ const App: React.FC = () => {
             path="/danhsachcv"
             element={<PrivateRoute element={<CV />} />}
           />
+
           <Route
-            path="/chitietcv"
+            path="/chitietcv/:jobId"
             element={<PrivateRoute element={<CvDetail />} />}
           />
         </Routes>

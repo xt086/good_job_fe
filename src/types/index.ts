@@ -63,3 +63,24 @@ export  interface JobDetailProps {
     ];
     personal_introduction: string;
   }
+
+  export interface CVDetail {
+    employee: {
+      id: any;
+      name: string;
+      employee_address: {
+        street: string;
+        district: string;
+        city: string;
+        zipcode: string;
+      };
+      number: string;
+      level: string;
+      major: { name: string }[];
+      gender: string;
+      age: string;
+      personal_introduction: string;
+      expired_time: string;
+    };
+    cv_url: String;
+  }

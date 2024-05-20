@@ -8,7 +8,8 @@ import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
 import { JobDetailProps } from "../../types";
 import client from "../../config";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "antd";
 
 const CV: React.FC = () => {
   const navigate = useNavigate();
@@ -137,18 +138,21 @@ const CV: React.FC = () => {
                   </div>
                 </div>
               </div>
-              {/* <button
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                // onClick={() => getListFile(job.id)}
+
+              <Link to={`/chitietcv/${job.id}`}>
+                <Button
+                  className="px-4  bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50"
+                  type="primary"
+                >
+                  Chi tiết
+                </Button>
+              </Link>
+              {/* <Link
+                to={`/chitietcv/${job.id}`}
+                className="text-blue-600 hover:underline"
               >
-                Xem danh sách CV
-              </button> */}
-              <button
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
-                onClick={() => navigate(`/chitietcv/${job.id}`)}
-              >
-                Xem danh sách CV
-              </button>
+                Chi Tiết
+              </Link> */}
             </div>
           </div>
         ))}
