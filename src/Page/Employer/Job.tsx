@@ -82,7 +82,7 @@ const Info = () => {
   };
   return (
     <section>
-      <div className="container mx-auto">
+      <div className=" mx-auto">
         <ToastContainer />
 
         <NavEm />

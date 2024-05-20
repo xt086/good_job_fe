@@ -19,6 +19,8 @@ import Employee from "./Page/Employer/Employee";
 import CV from "./Page/Employer/CV";
 import { ToastContainer } from "react-toastify";
 import CvDetail from "./Page/Employer/CVDeitail";
+import LoginCompany from "./Page/Login/LoginCompany";
+import RegisterCompany from "./Page/Signup/RegisterCompany";
 
 const App: React.FC = () => {
   return (
@@ -28,11 +30,21 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/dangnhap" element={<AuthRoute element={<Login />} />} />
           <Route path="/dangki" element={<AuthRoute element={<Singup />} />} />
-          <Route path="/" element={<PrivateRoute element={<Landing />} />} />
+          {/* <Route path="/dangnhap" element={<Login />} />
+          <Route path="/dangki" element={<Singup />} /> */}
+          <Route path="/dangnhap-nhatuyendung" element={<LoginCompany />} />
+          <Route path="/dangki-nhatuyendung" element={<RegisterCompany />} />
           <Route
+            path="/nguoilaodong"
+            element={<PrivateRoute element={<Employee />} />}
+          />
+
+          <Route path="/" element={<Landing />} />
+          {/* <Route
             path="/congty"
             element={<PrivateRoute element={<Company />} />}
-          />
+          /> */}
+          <Route path="/congty" element={<Company />} />
           <Route
             path="/profile"
             element={<PrivateRoute element={<Profile />} />}
@@ -41,27 +53,22 @@ const App: React.FC = () => {
             path="/chitietcongty/:companyId"
             element={<PrivateRoute element={<CompanyDetail />} />}
           />
-          <Route
+          {/* <Route
             path="/timvieclam"
             element={<PrivateRoute element={<Job />} />}
-          />
+          /> */}
+          <Route path="/timvieclam" element={<Job />} />
           <Route
             path="/chitetvieclam/:jobId"
             element={<PrivateRoute element={<JobDetail />} />}
           />
-          <Route path="/blog" element={<PrivateRoute element={<Blog />} />} />
-          <Route
-            path="/nhatuyendung"
-            element={<PrivateRoute element={<Lan />} />}
-          />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/nhatuyendung" element={<Lan />} />
           <Route
             path="/nhatuyendung/thongtin"
             element={<PrivateRoute element={<Info />} />}
           />
-          <Route
-            path="/nguoilaodong"
-            element={<PrivateRoute element={<Employee />} />}
-          />
+
           <Route
             path="/nhatuyendung/congviec"
             element={<PrivateRoute element={<Job1 />} />}

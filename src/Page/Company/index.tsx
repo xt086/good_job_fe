@@ -9,12 +9,14 @@ import client from "../../config";
 const CompanyList: React.FC = () => {
   const [companies, setCompanies] = useState<CompanyProps[]>([]);
   const [searchNation, setSearchNation] = useState<string>("");
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const getCompany = async () => {
       try {
         const res = await client.get("http://127.0.0.1:8000/company/");
         setCompanies(res.data);
+        setVisible(true);
       } catch (error) {
         console.error("An error occurred while fetching company data:", error);
       }
@@ -43,43 +45,49 @@ const CompanyList: React.FC = () => {
             className="border border-gray-300 rounded-md px-4 py-2 w-full"
           />
         </div> */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCompanies.map((company) => (
-            <div
-              key={company.id}
-              className="border border-gray-300 rounded-lg shadow-lg p-6 bg-white"
-            >
-              <h2 className="text-2xl font-bold mb-4">
+        {!visible ? (
+          <div className="text-2xl font-bold mb-2">
+            Bạn phải đăng nhập trước!
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredCompanies.map((company) => (
+              <div
+                key={company.id}
+                className="border border-gray-300 rounded-lg shadow-lg p-6 bg-white"
+              >
+                <h2 className="text-2xl font-bold mb-4">
+                  <Link
+                    to={`/chitietcongty/${company.id}`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {company.name}
+                  </Link>
+                </h2>
+                <p className="text-gray-700 mb-2">
+                  <FaLocationDot className="inline-block mr-2" />
+                  {company.company_address.street} -{" "}
+                  {company.company_address.district} -{" "}
+                  {company.company_address.city}
+                </p>
+                <p className="text-gray-700 mb-4">
+                  <strong>Ngành:</strong>{" "}
+                  {company.major.map((item, index) => (
+                    <span key={index} className="inline-block mr-2">
+                      {item.name}
+                    </span>
+                  ))}
+                </p>
                 <Link
                   to={`/chitietcongty/${company.id}`}
                   className="text-blue-600 hover:underline"
                 >
-                  {company.name}
+                  Chi Tiết
                 </Link>
-              </h2>
-              <p className="text-gray-700 mb-2">
-                <FaLocationDot className="inline-block mr-2" />
-                {company.company_address.street} -{" "}
-                {company.company_address.district} -{" "}
-                {company.company_address.city}
-              </p>
-              <p className="text-gray-700 mb-4">
-                <strong>Ngành:</strong>{" "}
-                {company.major.map((item, index) => (
-                  <span key={index} className="inline-block mr-2">
-                    {item.name}
-                  </span>
-                ))}
-              </p>
-              <Link
-                to={`/chitietcongty/${company.id}`}
-                className="text-blue-600 hover:underline"
-              >
-                Chi Tiết
-              </Link>
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <Footter />
     </section>

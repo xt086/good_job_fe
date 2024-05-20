@@ -168,7 +168,7 @@ const JobDetail: React.FC = () => {
               htmlFor="file-upload"
               className="uppercase text-2xl bg-blue-500 hover:bg-blue-600 text-white py-4 px-8 rounded-lg shadow-lg font-bold transition-transform transform hover:scale-105 duration-300 cursor-pointer"
             >
-              {file ? file.name : "Tải tệp lên"}
+              {file ? file.name : "Tải CV"}
             </label>
             <button
               className="uppercase text-2xl bg-yellow-500 hover:bg-yellow-600 text-white py-4 px-8 mt-5 rounded-lg shadow-lg font-bold transition-transform transform hover:scale-105 duration-300"

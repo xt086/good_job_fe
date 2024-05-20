@@ -7,7 +7,7 @@ import { useAuth } from "../../Context/AuthContext";
 
 const Navbar: React.FC = () => {
   const [visible, setVisible] = useState(false);
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const showDrawer = () => {
     setVisible(true);
@@ -30,7 +30,7 @@ const Navbar: React.FC = () => {
           <a href="/" className="text-white font-bold text-xl">
             <img
               src="../img/logo.png"
-              alt=""
+              alt="logo"
               style={{ width: "100px", height: "80px" }}
             />
           </a>
@@ -54,33 +54,58 @@ const Navbar: React.FC = () => {
         </div>
 
         <div className="md:flex space-x-4 px-2 hidden ">
-          <a href="/nhatuyendung" className=" hover:text-gray-300">
-            <Button
-              className="text-black font-bold"
-              type="primary"
-              icon={<TeamOutlined />}
-            >
-              NHÀ TUYỂN DỤNG
-            </Button>
-          </a>
-          <a href="/nguoilaodong" className=" hover:text-gray-300">
-            <Button
-              className="text-black font-bold"
-              type="primary"
-              icon={<UserOutlined />}
-            >
-              TẠO THÔNG TIN CÁ NHÂN
-            </Button>
-          </a>
-
-          <Button
-            className="text-black font-bold"
-            type="primary"
-            icon={<LogoutOutlined />}
-            onClick={onLogout}
-          >
-            ĐĂNG XUẤT
-          </Button>
+          {!user && (
+            <>
+              <a href="/nhatuyendung" className=" hover:text-gray-300">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<TeamOutlined />}
+                >
+                  NHÀ TUYỂN DỤNG
+                </Button>
+              </a>
+              <a href="/dangnhap" className=" hover:text-gray-300">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  ĐĂNG NHẬP
+                </Button>
+              </a>
+              <a href="/dangki" className=" hover:text-gray-300">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  ĐĂNG KÝ
+                </Button>
+              </a>
+            </>
+          )}
+          {user && (
+            <>
+              <a href="/nguoilaodong" className=" hover:text-gray-300">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  TẠO THÔNG TIN CÁ NHÂN
+                </Button>
+              </a>
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<LogoutOutlined />}
+                onClick={onLogout}
+              >
+                ĐĂNG XUẤT
+              </Button>
+            </>
+          )}
         </div>
 
         <div className="md:hidden ">
@@ -129,7 +154,6 @@ const Navbar: React.FC = () => {
               NHÀ TUYỂN DỤNG
             </Button>
           </Menu.Item>
-
           <Menu.Item key="5">
             <Button
               className="text-black font-bold"
@@ -139,16 +163,18 @@ const Navbar: React.FC = () => {
               TẠO THÔNG TIN CÁ NHÂN
             </Button>
           </Menu.Item>
-          <Menu.Item key="6">
-            <Button
-              className="text-black font-bold"
-              type="primary"
-              icon={<LogoutOutlined />}
-              onClick={onLogout}
-            >
-              ĐĂNG XUẤT
-            </Button>
-          </Menu.Item>
+          {user && (
+            <Menu.Item key="6">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<LogoutOutlined />}
+                onClick={onLogout}
+              >
+                ĐĂNG XUẤT
+              </Button>
+            </Menu.Item>
+          )}
         </Menu>
       </Drawer>
     </nav>

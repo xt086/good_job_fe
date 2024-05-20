@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import client from "../../config";
 
-const Register: React.FC = () => {
+const RegisterCompany: React.FC = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
@@ -21,7 +21,7 @@ const Register: React.FC = () => {
       await client.post("http://127.0.0.1:8000/user/register", data);
       toast.success("Đăng ký thành công!");
       setTimeout(() => {
-        navigate("/dangnhap");
+        navigate("/dangnhap-nhatuyendung");
       }, 1000);
     } catch (error) {
       toast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");
@@ -34,7 +34,7 @@ const Register: React.FC = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
         <ToastContainer />
         <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
-          Đăng ký Spicy
+          Đăng ký tài khoản nhà tuyển dụng
         </h2>
         <form onSubmit={onRegister}>
           <div className="mb-4">
@@ -107,4 +107,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default RegisterCompany;

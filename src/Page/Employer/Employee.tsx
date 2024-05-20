@@ -4,6 +4,7 @@ import Footter from "../../Components/Footter";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import client from "../../config";
+import Navbar from "../../Components/Navbar";
 
 const Employee = () => {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ const Employee = () => {
       <div className=" mx-auto">
         <ToastContainer />
 
-        <NavEm />
+        <Navbar />
 
         <h2 className="text-center text-xl uppercase font-semibold mt-5 mb-5">
           Tạo thông tin cá nhân
@@ -159,7 +160,7 @@ const Employee = () => {
                   className="block text-gray-700 text-sm font-bold mb-2"
                   htmlFor="name"
                 >
-                  Tên nhân viên
+                  Họ và tên
                 </label>
                 <input
                   id="name"
@@ -272,13 +273,13 @@ const Employee = () => {
                   onChange={(e) => setLevel(e.target.value)}
                 >
                   <option value="">Chọn cấp độ</option>
-                  <option value="IN">IN</option>
-                  <option value="FR">FR</option>
-                  <option value="JR">JR</option>
-                  <option value="MD">MD</option>
-                  <option value="SR">SR</option>
-                  <option value="MG">MG</option>
-                  <option value="advanced">CH</option>
+                  <option value="IN">INTERN</option>
+                  <option value="FR">FRESHER</option>
+                  <option value="JR">JUNIOR</option>
+                  <option value="MD">MIDDLE</option>
+                  <option value="SR">SENIOR</option>
+                  <option value="MG">MANAGER</option>
+                  {/* <option value="CH">CH</option> */}
                 </select>
               </div>
 

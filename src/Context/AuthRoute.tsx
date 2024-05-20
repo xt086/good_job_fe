@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
+import { toast } from "react-toastify";
 
 interface AuthRouteProps {
   element: React.ReactNode;
@@ -16,7 +17,6 @@ const AuthRoute: React.FC<AuthRouteProps> = ({ element }) => {
       const timeout = setTimeout(() => {
         setRedirect(true);
       }, 1000);
-
       return () => clearTimeout(timeout);
     }
   }, [storedUser, user]);

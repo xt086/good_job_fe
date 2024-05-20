@@ -9,12 +9,13 @@ import client from "../../config";
 const JobsList: React.FC = () => {
   const [jobs, setJobs] = useState<JobProps[]>([]);
   const [search, setSearch] = useState<string>("");
-
+  const [visible, setVisible] = useState(false);
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await client.get("http://127.0.0.1:8000/jobs/");
         setJobs(response.data);
+        setVisible(true);
       } catch (error) {
         console.error("An error occurred:", error);
       }
@@ -41,6 +42,7 @@ const JobsList: React.FC = () => {
         <h1 className="text-xl mt-5 md:text-2xl font-semibold ml-4">
           Tin tuyển dụng, việc làm nhanh 24h tại Việt Nam
         </h1>
+
         <div className="my-5">
           <input
             type="text"
@@ -56,48 +58,55 @@ const JobsList: React.FC = () => {
             Tìm kiếm
           </button>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
-          {jobs.map((job) => (
-            <div
-              key={job.id}
-              className="border border-gray-300 rounded-lg shadow-lg p-6 bg-white"
-            >
-              <h2 className="text-2xl font-bold mb-2">
+        {!visible ? (
+          <div className="text-2xl font-bold mb-2">
+            Bạn phải đăng nhập trước!
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
+            {jobs.map((job) => (
+              <div
+                key={job.id}
+                className="border border-gray-300 rounded-lg shadow-lg p-6 bg-white"
+              >
+                <h2 className="text-2xl font-bold mb-2">
+                  <Link
+                    to={`/chitetvieclam/${job.id}`}
+                    className="text-blue-600 hover:underline"
+                  >
+                    {job.name}
+                  </Link>
+                </h2>
+                <p className="text-gray-700 mb-2">
+                  <FaLocationDot className="inline-block mr-2" />
+                  {job.job_address.street}, {job.job_address.district},{" "}
+                  {job.job_address.city}
+                </p>
+                <p className="text-gray-700 mb-2">
+                  <strong>Ngành:</strong>{" "}
+                  {job.major.map((item, index) => (
+                    <span key={index} className="inline-block mr-2">
+                      {item.name}
+                    </span>
+                  ))}
+                </p>
+                <p className="text-gray-700 mb-2">
+                  <strong>Cấp độ:</strong> {job.level}
+                </p>
+                <p className="text-gray-700 mb-2">
+                  <strong>Lương:</strong> {job.min_salary} $ - {job.max_salary}{" "}
+                  $
+                </p>
                 <Link
                   to={`/chitetvieclam/${job.id}`}
                   className="text-blue-600 hover:underline"
                 >
-                  {job.name}
+                  Chi Tiết
                 </Link>
-              </h2>
-              <p className="text-gray-700 mb-2">
-                <FaLocationDot className="inline-block mr-2" />
-                {job.job_address.street}, {job.job_address.district},{" "}
-                {job.job_address.city}
-              </p>
-              <p className="text-gray-700 mb-2">
-                <strong>Ngành:</strong>{" "}
-                {job.major.map((item, index) => (
-                  <span key={index} className="inline-block mr-2">
-                    {item.name}
-                  </span>
-                ))}
-              </p>
-              <p className="text-gray-700 mb-2">
-                <strong>Cấp độ:</strong> {job.level}
-              </p>
-              <p className="text-gray-700 mb-2">
-                <strong>Lương:</strong> {job.min_salary} $ - {job.max_salary} $
-              </p>
-              <Link
-                to={`/chitetvieclam/${job.id}`}
-                className="text-blue-600 hover:underline"
-              >
-                Chi Tiết
-              </Link>
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <Footter />
     </section>

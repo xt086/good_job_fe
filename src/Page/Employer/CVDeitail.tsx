@@ -9,6 +9,7 @@ import { RiGroupFill } from "react-icons/ri";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
 import { CVDetail } from "../../types";
 import { IoLogoBuffer } from "react-icons/io";
+import NavEm from "./Nav";
 
 const CvDetail: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -30,7 +31,7 @@ const CvDetail: React.FC = () => {
 
   return (
     <section>
-      <Navbar />
+      <NavEm />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-12 text-center text-gray-800">
           Danh sách CV
@@ -94,6 +95,7 @@ const CvDetail: React.FC = () => {
                     Xem CV
                   </button>
                 </div>
+
                 {/* <div className="flex items-center font-medium mb-5 w-full">
                   <BiSolidMessageAltDetail
                     size={24}

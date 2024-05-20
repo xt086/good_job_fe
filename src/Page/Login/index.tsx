@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "../../Context/AuthContext";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,10 +9,13 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useAuth();
-
+  const navigate = useNavigate();
   const onLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     login(email, password);
+    // setTimeout(() => {
+    //   navigate("/");
+    // }, 1000);
   };
 
   return (

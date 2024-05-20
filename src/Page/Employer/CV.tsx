@@ -4,16 +4,15 @@ import { MdWork } from "react-icons/md";
 import { RiGroupFill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { IoIosTime } from "react-icons/io";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
-import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
 import { JobDetailProps } from "../../types";
 import client from "../../config";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "antd";
+import NavEm from "./Nav";
 
 const CV: React.FC = () => {
   const navigate = useNavigate();
-  const [file, setFile] = useState<File | null>(null);
   const [user, setUser] = useState("");
   const [company, setCompany] = useState("");
   const [job, setJob] = useState("");
@@ -55,17 +54,6 @@ const CV: React.FC = () => {
     }
   }, [company]);
 
-  // const getListFile = async (jobid: any) => {
-  //   try {
-  //     const response = await client.get(
-  //       `http://127.0.0.1:8000/get-file?jobId=${jobid}`
-  //     );
-  //     setFile(response.data);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
-
   useEffect(() => {
     getUserId();
   }, [getUserId]);
@@ -80,7 +68,7 @@ const CV: React.FC = () => {
 
   return (
     <section>
-      <Navbar />
+      <NavEm />
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold mb-12 text-center text-gray-800">
           Danh sách công việc
