@@ -4,7 +4,6 @@ import { MdWork } from "react-icons/md";
 import { RiGroupFill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { IoIosTime } from "react-icons/io";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
-
 import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
 import client from "../../config";

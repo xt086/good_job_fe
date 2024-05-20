@@ -21,7 +21,7 @@ const Register: React.FC = () => {
       await client.post("http://127.0.0.1:8000/user/register", data);
       toast.success("Đăng ký thành công!");
       setTimeout(() => {
-        navigate("/nhatuyendung/thongtin");
+        navigate("/dangnhap");
       }, 1000);
     } catch (error) {
       toast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");
@@ -30,78 +30,11 @@ const Register: React.FC = () => {
   };
 
   return (
-    // <div className="min-h-screen flex justify-center items-center bg-gray-100">
-    //   <ToastContainer />
-    //   <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-    //     <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
-    //       Đăng ký tài khoản
-    //     </h2>
-    //     <form onSubmit={onRegister}>
-    //       <div className="mb-6">
-    //         <label
-    //           className="block text-gray-700 text-sm font-bold mb-2"
-    //           htmlFor="email"
-    //         >
-    //           Email
-    //         </label>
-    //         <input
-    //           className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
-    //           id="email"
-    //           type="email"
-    //           name="email"
-    //           value={email}
-    //           onChange={(e) => setEmail(e.target.value)}
-    //           placeholder="Nhập email của bạn"
-    //         />
-    //       </div>
-    //       <div className="mb-6">
-    //         <label
-    //           className="block text-gray-700 text-sm font-bold mb-2"
-    //           htmlFor="username"
-    //         >
-    //           Tên người dùng
-    //         </label>
-    //         <input
-    //           className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
-    //           id="username"
-    //           type="text"
-    //           name="username"
-    //           value={username}
-    //           onChange={(e) => setUsername(e.target.value)}
-    //           placeholder="Nhập tên người dùng"
-    //         />
-    //       </div>
-    //       <div className="mb-6">
-    //         <label
-    //           className="block text-gray-700 text-sm font-bold mb-2"
-    //           htmlFor="password"
-    //         >
-    //           Mật khẩu
-    //         </label>
-    //         <input
-    //           className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
-    //           id="password"
-    //           type="password"
-    //           name="password"
-    //           value={password}
-    //           onChange={(e) => setPassword(e.target.value)}
-    //           placeholder="Nhập mật khẩu"
-    //         />
-    //       </div>
-    //       <button
-    //         className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline transition duration-200 w-full"
-    //         type="submit"
-    //       >
-    //         Đăng ký
-    //       </button>
-    //     </form>
-    //   </div>
-    // </div>
     <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-500 to-purple-600">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
         <ToastContainer />
         <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
-          Đăng nhập Spicy để tiếp tục
+          Đăng ký Spicy
         </h2>
         <form onSubmit={onRegister}>
           <div className="mb-4">
@@ -118,6 +51,23 @@ const Register: React.FC = () => {
               placeholder="Nhập email của bạn"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="mb-6">
+            <label
+              className="block text-gray-700 text-sm font-bold mb-2"
+              htmlFor="username"
+            >
+              Tên người dùng
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
+              id="username"
+              type="text"
+              name="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Nhập tên người dùng"
             />
           </div>
           <div className="mb-6">
