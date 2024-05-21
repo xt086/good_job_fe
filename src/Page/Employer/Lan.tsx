@@ -1,5 +1,6 @@
 import React from "react";
 import NavEm from "./Nav";
+import Footer from "../../Components/Footter";
 
 const logos = [
   "./svg/aha.svg",
@@ -107,7 +108,7 @@ const Lan: React.FC = () => {
           </div>
         </nav>
       </div>
-      <Footter />
+      <Footer />
     </section>
   );
 };

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
-import NavEm from "./Nav";
-import Footter from "../../Components/Footter";
+import Footer from "../../Components/Footter";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import client from "../../config";
@@ -295,7 +294,7 @@ const Employee = () => {
           </div>
         </div>
       </div>
-      <Footter />
+      <Footer />
     </section>
   );
 };

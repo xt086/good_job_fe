@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Footter from "../../Components/Footter";
 import client from "../../config";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdWork, MdContactPhone } from "react-icons/md";
@@ -9,6 +8,7 @@ import { BiSolidMessageAltDetail } from "react-icons/bi";
 import { CVDetail } from "../../types";
 import { IoLogoBuffer } from "react-icons/io";
 import NavEm from "./Nav";
+import Footer from "../../Components/Footter";
 
 const CvDetail: React.FC = () => {
   const { jobId } = useParams<{ jobId: string }>();
@@ -99,7 +99,7 @@ const CvDetail: React.FC = () => {
           </div>
         ))}
       </div>
-      <Footter />
+      <Footer />
     </section>
   );
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../../Components/Navbar";
-import Footter from "../../Components/Footter";
+import Footer from "../../Components/Footter";
 
 const Blog = () => {
   return (
@@ -189,7 +189,7 @@ const Blog = () => {
         </div>
       </nav>
 
-      <Footter />
+      <Footer />
     </section>
   );
 };

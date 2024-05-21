@@ -4,7 +4,7 @@ import { MdWork } from "react-icons/md";
 import { RiGroupFill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import { IoIosTime } from "react-icons/io";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
-import Footter from "../../Components/Footter";
+import Footer from "../../Components/Footter";
 import { JobDetailProps } from "../../types";
 import client from "../../config";
 import { Link, useNavigate } from "react-router-dom";
@@ -145,7 +145,7 @@ const CV: React.FC = () => {
           </div>
         ))}
       </div>
-      <Footter />
+      <Footer />
     </section>
   );
 };

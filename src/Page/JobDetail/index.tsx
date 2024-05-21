@@ -4,12 +4,12 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdWork } from "react-icons/md";
 import { RiGroupFill, RiMoneyDollarCircleFill } from "react-icons/ri";
 import Navbar from "../../Components/Navbar";
-import Footter from "../../Components/Footter";
 import { BiSolidMessageAltDetail } from "react-icons/bi";
 import { IoIosTime } from "react-icons/io";
 import { toast } from "react-toastify";
 import { JobDetailProps } from "../../types";
 import client from "../../config";
+import Footer from "../../Components/Footter";
 
 const JobDetail: React.FC = () => {
   const navigate = useNavigate();
@@ -179,7 +179,7 @@ const JobDetail: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footter />
+      <Footer />
     </section>
   );
 };

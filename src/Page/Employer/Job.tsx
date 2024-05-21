@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from "react";
 import NavEm from "./Nav";
-import Footter from "../../Components/Footter";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import client from "../../config";
+import Footer from "../../Components/Footter";
 
 const Info = () => {
   const navigate = useNavigate();
@@ -273,7 +273,7 @@ const Info = () => {
           </div>
         </div>
       </div>
-      <Footter />
+      <Footer />
     </section>
   );
 };

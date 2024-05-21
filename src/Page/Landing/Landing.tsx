@@ -5,7 +5,7 @@ import User from "./User";
 import ValueProposition from "./ValueProposition";
 import Search from "./Search";
 import Navbar from "../../Components/Navbar";
-import Footter from "../../Components/Footter";
+import Footer from "../../Components/Footter";
 import { useNavigate } from "react-router-dom";
 import client from "../../config";
 
@@ -60,7 +60,7 @@ const Landing = () => {
           <User />
         </div>
       </div>
-      <Footter />
+      <Footer />
     </section>
   );
 };

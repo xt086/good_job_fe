@@ -3,11 +3,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from "./Page/Landing/Landing";
 import Login from "./Page/Login";
 import Singup from "./Page/Signup";
-import Company from "./Page/Company";
 import Blog from "./Page/Blog";
 import Profile from "./Page/Profile";
 import Lan from "./Page/Employer/Lan";
-import Job from "./Page/Job";
 import Info from "./Page/Employer/Info";
 import Job1 from "./Page/Employer/Job";
 import PrivateRoute from "./Context/ProtectRoute";
@@ -21,6 +19,8 @@ import { ToastContainer } from "react-toastify";
 import CvDetail from "./Page/Employer/CVDeitail";
 import LoginCompany from "./Page/Login/LoginCompany";
 import RegisterCompany from "./Page/Signup/RegisterCompany";
+import Job from "./Page/Job";
+import Company from "./Page/Company";
 
 const App: React.FC = () => {
   return (
@@ -71,7 +71,7 @@ const App: React.FC = () => {
 
           <Route
             path="/nhatuyendung/congviec"
-            element={<PrivateRoute element={<Job1 />} />}
+            element={<PrivateRoute element={<Info />} />}
           />
 
           <Route
