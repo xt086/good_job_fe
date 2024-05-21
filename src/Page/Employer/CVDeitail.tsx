@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../../Components/Navbar";
 import Footter from "../../Components/Footter";
 import client from "../../config";
 import { FaLocationDot } from "react-icons/fa6";
@@ -95,14 +94,6 @@ const CvDetail: React.FC = () => {
                     Xem CV
                   </button>
                 </div>
-
-                {/* <div className="flex items-center font-medium mb-5 w-full">
-                  <BiSolidMessageAltDetail
-                    size={24}
-                    className="text-gray-600"
-                  />
-                  <p className="ml-3">{file.cv_url}</p>
-                </div> */}
               </div>
             </div>
           </div>
