@@ -1,6 +1,5 @@
 import React from "react";
 import NavEm from "./Nav";
-import Footter from "../../Components/Footter";
 
 const logos = [
   "./svg/aha.svg",
