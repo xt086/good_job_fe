@@ -1,32 +1,21 @@
 import React, { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import client from "../../config";
+import { ToastContainer } from "react-toastify";
+import { useAuth } from "../../Context/AuthContext";
+import "react-toastify/dist/ReactToastify.css";
 
-const Register: React.FC = () => {
-  const navigate = useNavigate();
+const LoginCompany: React.FC = () => {
   const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const onRegister = async (e: React.FormEvent<HTMLFormElement>) => {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const onLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const data = {
-        email: email,
-        password: password,
-        username: username,
-      };
-
-      await client.post("http://127.0.0.1:8000/user/register", data);
-      toast.success("Đăng ký thành công!");
-      setTimeout(() => {
-        navigate("/dangnhap");
-      }, 1000);
-    } catch (error) {
-      toast.error("Đăng ký thất bại. Vui lòng kiểm tra lại thông tin.");
-      console.error("An error occurred:", error);
-    }
+    login(email, password);
+    setTimeout(() => {
+      navigate("/nhatuyendung");
+    }, 1000);
   };
 
   return (
@@ -34,9 +23,9 @@ const Register: React.FC = () => {
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg">
         <ToastContainer />
         <h2 className="text-3xl font-semibold text-gray-800 mb-6 text-center">
-          Đăng ký Spicy
+          Đăng nhập nhà tuyển dụng
         </h2>
-        <form onSubmit={onRegister}>
+        <form onSubmit={onLogin}>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -51,23 +40,6 @@ const Register: React.FC = () => {
               placeholder="Nhập email của bạn"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Tên người dùng
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline transition duration-200"
-              id="username"
-              type="text"
-              name="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Nhập tên người dùng"
             />
           </div>
           <div className="mb-6">
@@ -91,15 +63,22 @@ const Register: React.FC = () => {
               className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded focus:outline-none focus:shadow-outline transition duration-200 w-full"
               type="submit"
             >
-              Đăng ký
+              Đăng nhập
             </button>
             <span className="text-gray-600">Hoặc</span>
             <Link
-              to="/dangnhap"
+              to="/dangki-nhatuyendung"
               className="text-blue-600 hover:underline transition duration-200"
             >
-              Bạn đã có tài khoản?
+              Bạn chưa có tài khoản?
             </Link>
+            <button
+              className="bg-white hover:bg-gray-100 border border-gray-300 text-gray-700 font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline flex items-center justify-center gap-2 transition duration-200"
+              type="button"
+            >
+              <FcGoogle size={24} />
+              <span>Đăng nhập với Google</span>
+            </button>
           </div>
         </form>
       </div>
@@ -107,4 +86,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default LoginCompany;

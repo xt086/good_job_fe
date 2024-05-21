@@ -1,9 +1,13 @@
 import React from "react";
+import Navbar from "../../Components/Navbar";
+import Footer from "../../Components/Footter";
 
 const Blog = () => {
   return (
-    <section className="container mx-auto">
-      <nav>
+    <section>
+      <Navbar />
+
+      <nav className="container mx-auto">
         <div className="flex  items-center justify-center md:justify-start">
           <img
             src="../img/logo.png"
@@ -184,6 +188,8 @@ const Blog = () => {
           </div>
         </div>
       </nav>
+
+      <Footer />
     </section>
   );
 };

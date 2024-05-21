@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { UserOutlined, LoginOutlined } from "@ant-design/icons";
-
+import {
+  SolutionOutlined,
+  ContainerOutlined,
+  UnorderedListOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { useAuth } from "../../Context/AuthContext";
 
-const Nav: React.FC = () => {
+const NavEm: React.FC = () => {
   const [visible, setVisible] = useState(false);
+  const { user, logout } = useAuth();
 
   const showDrawer = () => {
     setVisible(true);
@@ -15,11 +23,38 @@ const Nav: React.FC = () => {
     setVisible(false);
   };
 
+  // const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   try {
+  //     await client.post("http://127.0.0.1:8000/user/login", {
+  //       email: email,
+  //       password: password,
+  //     });
+  //     setCheckLogin(true);
+  //     toast.success("Đăng nhập thành công!");
+
+  //     setTimeout(() => {
+  //       navigate("/");
+  //     }, 1000);
+  //   } catch (error) {
+  //     toast.error(
+  //       "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập!"
+  //     );
+  //     setCheckLogin(false);
+  //   }
+  // };
+
+  const onLogout = async () => {
+    logout();
+  };
+
   return (
     <nav className="text-black bg-white px-3 font-bold border border-gray-300">
+      <ToastContainer />
+
       <div className="container mx-auto flex justify-between items-center ">
         <div className="flex justify-center items-center space-x-10">
-          <a href="/" className="text-white font-bold text-xl">
+          <a href="/nhatuyendung" className="text-white font-bold text-xl">
             <img
               src="../img/logo.png"
               alt=""
@@ -27,13 +62,13 @@ const Nav: React.FC = () => {
             />
           </a>
           <div className="hidden md:flex space-x-10">
-            <a href="/Timvieclam" className=" hover:text-gray-300">
+            <a href="/" className=" hover:text-gray-300">
               TÌM VIỆC LÀM
             </a>
-            <a href="/Congty" className=" hover:text-gray-300">
+            {/* <a href="/congty" className=" hover:text-gray-300">
               FAQ
-            </a>
-            <a href="/Blog" target="_blank" className=" hover:text-gray-300">
+            </a> */}
+            <a href="/blog" target="_blank" className=" hover:text-gray-300">
               BLOG
             </a>
           </div>
@@ -44,39 +79,68 @@ const Nav: React.FC = () => {
             Menu
           </Button>
         </div>
-
-        <div className="md:flex space-x-4 px-2 hidden md:block">
-          {/* <a
-            href="/Nhatuyendung"
-            target="_blank"
-            className=" hover:text-gray-300">
+        {user && (
+          <div className=" space-x-4 px-2 hidden md:block">
+            <Link to="/danhsachcv">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<ContainerOutlined />}
+              >
+                DANH SÁCH CÔNG VIỆC
+              </Button>
+            </Link>
+            <Link to="/nhatuyendung/thongtin">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<UnorderedListOutlined />}
+              >
+                TẠO NHÀ TUYỂN DỤNG
+              </Button>
+            </Link>
+            <Link to="/nhatuyendung/congviec">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<SolutionOutlined />}
+              >
+                TẠO CÔNG VIỆC
+              </Button>
+            </Link>
             <Button
-              type="primary"
-              className="text-black font-bold flex justify-center items-center gap-2">
-              NHÀ TUYỂN DỤNG
-              <AiOutlineArrowRight />
-            </Button>
-          </a> */}
-
-          <Link to="/Dangnhap">
-            <Button
-              type="primary"
-              icon={<UserOutlined />}
               className="text-black font-bold"
-            >
-              ĐĂNG NHẬP
-            </Button>
-          </Link>
-          <Link to="/Dangki">
-            <Button
-              className="text-black font-bold"
               type="primary"
-              icon={<LoginOutlined />}
+              icon={<LogoutOutlined />}
+              onClick={onLogout}
             >
-              ĐĂNG KÍ
+              ĐĂNG XUẤT
             </Button>
-          </Link>
-        </div>
+          </div>
+        )}
+
+        {!user && (
+          <div className=" space-x-4 px-2 hidden md:block">
+            <Link to="/dangnhap-nhatuyendung">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<UserOutlined />}
+              >
+                ĐĂNG NHẬP
+              </Button>
+            </Link>
+            <Link to="/dangki-nhatuyendung">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<UserOutlined />}
+              >
+                ĐĂNG KÝ
+              </Button>
+            </Link>
+          </div>
+        )}
 
         <div className="md:hidden ">
           <button className="" onClick={showDrawer}>
@@ -107,37 +171,89 @@ const Nav: React.FC = () => {
       >
         <Menu mode="inline">
           <Menu.Item key="1">
-            <Link to="/TImvieclam">TÌM VIỆC LÀM</Link>
+            <Link to="/">TÌM VIỆC LÀM</Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/Congty">FAQ</Link>
+            <Link to="/blog">BLOG</Link>
           </Menu.Item>
-          <Menu.Item key="3">
-            <Link to="/Blog">BLOG</Link>
-          </Menu.Item>
-          {/* <Menu.Item key="4">
-            <a
-              className="flex  items-center gap-2"
-              href="/Nhatuyendung"
-              target="_blank">
-              NHÀ TUYỂN DỤNG
-              <AiOutlineArrowRight />
-            </a>
-          </Menu.Item> */}
-          <Menu.Item key="5">
-            <Link to="/Dangnhap">
-              <UserOutlined /> ĐĂNG NHẬP
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="6">
-            <Link to="/Dangki">
-              <LoginOutlined /> ĐĂNG KÍ
-            </Link>
-          </Menu.Item>
+          {!user && (
+            <>
+              <Menu.Item key="4">
+                <Link to="/dangnhap-nhatuyendung">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<UserOutlined />}
+                  >
+                    ĐĂNG NHẬP
+                  </Button>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="5">
+                <Link to="/dangki-nhatuyendung">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<UserOutlined />}
+                  >
+                    ĐĂNG KÝ
+                  </Button>
+                </Link>
+              </Menu.Item>
+            </>
+          )}
+
+          {user && (
+            <>
+              <Menu.Item key="3">
+                <Link to="/danhsachcv">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<ContainerOutlined />}
+                  >
+                    DANH SÁCH CÔNG VIỆC
+                  </Button>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="6">
+                <Link to="/danhsachcv">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<ContainerOutlined />}
+                  >
+                    DANH SÁCH CÔNG VIỆC
+                  </Button>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="7">
+                <Link to="/nhatuyendung/thongtin">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<UnorderedListOutlined />}
+                  >
+                    TẠO NHÀ TUYỂN DỤNG
+                  </Button>
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="8">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<LogoutOutlined />}
+                  onClick={onLogout}
+                >
+                  ĐĂNG XUẤT
+                </Button>
+              </Menu.Item>
+            </>
+          )}
         </Menu>
       </Drawer>
     </nav>
   );
 };
 
-export default Nav;
+export default NavEm;

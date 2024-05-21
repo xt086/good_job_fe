@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Menu, Button, Drawer } from "antd";
-import { UserOutlined, LoginOutlined } from "@ant-design/icons";
-import { AiOutlineArrowRight } from "react-icons/ai";
+import { LogoutOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { useAuth } from "../../Context/AuthContext";
 
 const Navbar: React.FC = () => {
   const [visible, setVisible] = useState(false);
+  const { user, logout } = useAuth();
 
   const showDrawer = () => {
     setVisible(true);
@@ -15,25 +17,31 @@ const Navbar: React.FC = () => {
     setVisible(false);
   };
 
+  const onLogout = async () => {
+    logout();
+  };
+
   return (
     <nav className="text-black bg-white px-3 font-bold border border-gray-300">
+      <ToastContainer />
+
       <div className="container mx-auto flex justify-between items-center ">
         <div className="flex justify-center items-center space-x-10">
           <a href="/" className="text-white font-bold text-xl">
             <img
               src="../img/logo.png"
-              alt=""
+              alt="logo"
               style={{ width: "100px", height: "80px" }}
             />
           </a>
           <div className="hidden md:flex space-x-10">
-            <a href="/Timvieclam" className=" hover:text-gray-300">
+            <a href="/timvieclam" className=" hover:text-gray-300">
               TÌM VIỆC LÀM
             </a>
-            <a href="/Congty" className=" hover:text-gray-300">
+            <a href="/congty" className=" hover:text-gray-300">
               TÌM CÔNG TY
             </a>
-            <a href="/Blog" target="_blank" className=" hover:text-gray-300">
+            <a href="/blog" className=" hover:text-gray-300">
               BLOG
             </a>
           </div>
@@ -45,39 +53,59 @@ const Navbar: React.FC = () => {
           </Button>
         </div>
 
-        <div className="md:flex space-x-4 px-2 hidden md:block">
-          <a
-            href="/Nhatuyendung"
-            target="_blank"
-            className=" hover:text-gray-300"
-          >
-            <Button
-              type="primary"
-              className="text-black font-bold flex justify-center items-center gap-2"
-            >
-              NHÀ TUYỂN DỤNG
-              <AiOutlineArrowRight />
-            </Button>
-          </a>
-
-          <Link to="/Dangnhap">
-            <Button
-              type="primary"
-              icon={<UserOutlined />}
-              className="text-black font-bold"
-            >
-              ĐĂNG NHẬP
-            </Button>
-          </Link>
-          <Link to="/Dangki">
-            <Button
-              className="text-black font-bold"
-              type="primary"
-              icon={<LoginOutlined />}
-            >
-              ĐĂNG KÍ
-            </Button>
-          </Link>
+        <div className="md:flex space-x-4 px-2 hidden ">
+          {!user && (
+            <>
+              <a href="/nhatuyendung" className=" hover:text-gray-300">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<TeamOutlined />}
+                >
+                  NHÀ TUYỂN DỤNG
+                </Button>
+              </a>
+              <a href="/dangnhap" className=" hover:text-gray-300">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  ĐĂNG NHẬP
+                </Button>
+              </a>
+              <a href="/dangki" className=" hover:text-gray-300">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  ĐĂNG KÝ
+                </Button>
+              </a>
+            </>
+          )}
+          {user && (
+            <>
+              <a href="/nguoilaodong" className=" hover:text-gray-300">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  TẠO THÔNG TIN CÁ NHÂN
+                </Button>
+              </a>
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<LogoutOutlined />}
+                onClick={onLogout}
+              >
+                ĐĂNG XUẤT
+              </Button>
+            </>
+          )}
         </div>
 
         <div className="md:hidden ">
@@ -109,34 +137,67 @@ const Navbar: React.FC = () => {
       >
         <Menu mode="inline">
           <Menu.Item key="1">
-            <Link to="/Timvieclam">TÌM VIỆC LÀM</Link>
+            <Link to="/timvieclam">TÌM VIỆC LÀM</Link>
           </Menu.Item>
           <Menu.Item key="2">
-            <Link to="/Congty">TÌM CÔNG TY</Link>
+            <Link to="/congty">TÌM CÔNG TY</Link>
           </Menu.Item>
           <Menu.Item key="3">
-            <Link to="/Blog">BLOG</Link>
+            <Link to="/blog">BLOG</Link>
           </Menu.Item>
           <Menu.Item key="4">
-            <a
-              className="flex  items-center gap-2"
-              href="/Nhatuyendung"
-              target="_blank"
+            <Button
+              className="text-black font-bold"
+              type="primary"
+              icon={<TeamOutlined />}
             >
               NHÀ TUYỂN DỤNG
-              <AiOutlineArrowRight />
-            </a>
+            </Button>
           </Menu.Item>
-          <Menu.Item key="5">
-            <Link to="/Dangnhap">
-              <UserOutlined /> ĐĂNG NHẬP
-            </Link>
-          </Menu.Item>
-          <Menu.Item key="6">
-            <Link to="/Dangki">
-              <LoginOutlined /> ĐĂNG KÍ
-            </Link>
-          </Menu.Item>
+          {!user && (
+            <>
+              <Menu.Item key="5">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  TẠO THÔNG TIN CÁ NHÂN
+                </Button>
+              </Menu.Item>
+              <Menu.Item key="6">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<TeamOutlined />}
+                >
+                  ĐĂNG NHẬP
+                </Button>
+              </Menu.Item>
+              <Menu.Item key="7">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UserOutlined />}
+                >
+                  ĐĂNG KÝ
+                </Button>
+              </Menu.Item>
+            </>
+          )}
+
+          {user && (
+            <Menu.Item key="8">
+              <Button
+                className="text-black font-bold"
+                type="primary"
+                icon={<LogoutOutlined />}
+                onClick={onLogout}
+              >
+                ĐĂNG XUẤT
+              </Button>
+            </Menu.Item>
+          )}
         </Menu>
       </Drawer>
     </nav>
