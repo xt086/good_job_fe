@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { JobDetailProps } from "../../types";
 import client from "../../config";
 import Footer from "../../Components/Footter";
-
+import * as Minio from 'minio'
 const JobDetail: React.FC = () => {
   const navigate = useNavigate();
   const { jobId } = useParams<{ jobId: string | any }>();
@@ -18,7 +18,7 @@ const JobDetail: React.FC = () => {
   const [user, setUser] = useState("");
   const [employee, setEmployee] = useState("");
   const [file, setFile] = useState<File | null>(null);
-
+  const [mc, setMc] = useState<Minio.Client | null>(null);
   useEffect(() => {
     const fetchJobDetails = async () => {
       try {
@@ -26,7 +26,7 @@ const JobDetail: React.FC = () => {
           `http://127.0.0.1:8000/jobs/${jobId}/`
         );
         setJob(response.data);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     fetchJobDetails();
@@ -37,7 +37,7 @@ const JobDetail: React.FC = () => {
       try {
         const response = await client.get(`http://127.0.0.1:8000/user/user`);
         setUser(response.data.user.id);
-      } catch (err) {}
+      } catch (err) { }
     };
 
     getUserId();
@@ -65,7 +65,45 @@ const JobDetail: React.FC = () => {
   if (!job) {
     return null;
   }
+  useEffect(() => {
+    const minioClient = new Minio.Client({
+      endPoint: 'localhost',
+      port: 9000,
+      useSSL: true,
+      accessKey: 'fXlqy9uSC833D9FNgVuT',
+      secretKey: 'pptUm1PCyBLy9RPaMnMU4gH2x1iu0i6D2IaQllDz',
+    })
+    setMc(minioClient)
+  }, [])
+  const uploadObj = async (fileData: any, fileName: string) => {
 
+    // const fileBuffer = new FileReader();
+    // fileBuffer.readAsArrayBuffer(fileData);
+
+    // fileBuffer.onload = async function () {
+    //   let buf = Buffer.from(fileBuffer.result, "base64"); //buffer data
+    //   if (mc){
+    //     await mc.putObject("hello", "FileName", buf, function (err, etag) {
+    //       return console.log(err, etag); // err should be null
+    //     });
+    //   }
+
+    // };
+    // fileBuffer.onerror = function (error) {
+    //   console.log("Error: ", error);
+    // };
+
+    const metaData = {
+      'Content-Type': 'multipart/form-data',
+      'Content-Language': 123,
+      'X-Amz-Meta-Testing': 1234,
+      example: 5678,
+    }
+    if (mc) {
+     await mc.fPutObject('uploadcv', fileName, fileData, undefined)
+
+    }
+  }
   const onApply = async () => {
     if (!file) {
       toast.error("Vui lòng chọn tệp CV trước khi ứng tuyển!");
@@ -78,7 +116,9 @@ const JobDetail: React.FC = () => {
     formData.append("file", file);
 
     try {
-      await client.post("http://127.0.0.1:8000/upload", formData);
+      // await client.post("http://127.0.0.1:8000/upload", formData);
+      const fileName = jobId + "/" + employee+".pdf"
+      await uploadObj(file, fileName)
       toast.success("Ứng tuyển công việc thành công!");
 
       setTimeout(() => {
