@@ -12,7 +12,7 @@ import client from "../../config";
 const Landing = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState("");
-  const [company, setCompany] = useState("");
+  const [company, setCompany] = useState<string>("");
 
   const getUserId = useCallback(async () => {
     try {

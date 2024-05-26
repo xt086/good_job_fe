@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Menu, Button, Drawer } from "antd";
 import {
   SolutionOutlined,
@@ -10,10 +10,43 @@ import {
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "../../Context/AuthContext";
+import client from "../../config";
 
 const NavEm: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const { user, logout } = useAuth();
+  const [userId, setUserId] = useState("");
+  const [company, setCompany] = useState("");
+
+  const getUserId = useCallback(async () => {
+    try {
+      const response = await client.get(`http://127.0.0.1:8000/user/user`);
+      setUserId(response.data.user.id);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  const getCompany = useCallback(async () => {
+    if (user) {
+      try {
+        const response = await client.get(
+          `http://127.0.0.1:8000/company/?userId=${userId}`
+        );
+        setCompany(response.data[0].id);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    getUserId();
+  }, [getUserId]);
+
+  useEffect(() => {
+    getCompany();
+  }, [getCompany]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -22,27 +55,6 @@ const NavEm: React.FC = () => {
   const onClose = () => {
     setVisible(false);
   };
-
-  // const onLogin = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   try {
-  //     await client.post("http://127.0.0.1:8000/user/login", {
-  //       email: email,
-  //       password: password,
-  //     });
-  //     setCheckLogin(true);
-  //     toast.success("Đăng nhập thành công!");
-
-  //     setTimeout(() => {
-  //       navigate("/");
-  //     }, 1000);
-  //   } catch (error) {
-  //     toast.error(
-  //       "Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập!"
-  //     );
-  //     setCheckLogin(false);
-  //   }
-  // };
 
   const onLogout = async () => {
     logout();
@@ -85,26 +97,25 @@ const NavEm: React.FC = () => {
               <Button
                 className="text-black font-bold"
                 type="primary"
-                icon={<ContainerOutlined />}
-              >
+                icon={<ContainerOutlined />}>
                 DANH SÁCH CÔNG VIỆC
               </Button>
             </Link>
-            <Link to="/nhatuyendung/thongtin">
-              <Button
-                className="text-black font-bold"
-                type="primary"
-                icon={<UnorderedListOutlined />}
-              >
-                TẠO NHÀ TUYỂN DỤNG
-              </Button>
-            </Link>
+            {!company && (
+              <Link to="/nhatuyendung/thongtin">
+                <Button
+                  className="text-black font-bold"
+                  type="primary"
+                  icon={<UnorderedListOutlined />}>
+                  TẠO NHÀ TUYỂN DỤNG
+                </Button>
+              </Link>
+            )}
             <Link to="/nhatuyendung/congviec">
               <Button
                 className="text-black font-bold"
                 type="primary"
-                icon={<SolutionOutlined />}
-              >
+                icon={<SolutionOutlined />}>
                 TẠO CÔNG VIỆC
               </Button>
             </Link>
@@ -112,8 +123,7 @@ const NavEm: React.FC = () => {
               className="text-black font-bold"
               type="primary"
               icon={<LogoutOutlined />}
-              onClick={onLogout}
-            >
+              onClick={onLogout}>
               ĐĂNG XUẤT
             </Button>
           </div>
@@ -125,8 +135,7 @@ const NavEm: React.FC = () => {
               <Button
                 className="text-black font-bold"
                 type="primary"
-                icon={<UserOutlined />}
-              >
+                icon={<UserOutlined />}>
                 ĐĂNG NHẬP
               </Button>
             </Link>
@@ -134,8 +143,7 @@ const NavEm: React.FC = () => {
               <Button
                 className="text-black font-bold"
                 type="primary"
-                icon={<UserOutlined />}
-              >
+                icon={<UserOutlined />}>
                 ĐĂNG KÝ
               </Button>
             </Link>
@@ -149,14 +157,12 @@ const NavEm: React.FC = () => {
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
+                d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
         </div>
@@ -167,8 +173,7 @@ const NavEm: React.FC = () => {
         placement="right"
         closable={false}
         onClose={onClose}
-        visible={visible}
-      >
+        visible={visible}>
         <Menu mode="inline">
           <Menu.Item key="1">
             <Link to="/">TÌM VIỆC LÀM</Link>
@@ -183,8 +188,7 @@ const NavEm: React.FC = () => {
                   <Button
                     className="text-black font-bold"
                     type="primary"
-                    icon={<UserOutlined />}
-                  >
+                    icon={<UserOutlined />}>
                     ĐĂNG NHẬP
                   </Button>
                 </Link>
@@ -194,8 +198,7 @@ const NavEm: React.FC = () => {
                   <Button
                     className="text-black font-bold"
                     type="primary"
-                    icon={<UserOutlined />}
-                  >
+                    icon={<UserOutlined />}>
                     ĐĂNG KÝ
                   </Button>
                 </Link>
@@ -210,8 +213,7 @@ const NavEm: React.FC = () => {
                   <Button
                     className="text-black font-bold"
                     type="primary"
-                    icon={<ContainerOutlined />}
-                  >
+                    icon={<ContainerOutlined />}>
                     DANH SÁCH CÔNG VIỆC
                   </Button>
                 </Link>
@@ -221,8 +223,7 @@ const NavEm: React.FC = () => {
                   <Button
                     className="text-black font-bold"
                     type="primary"
-                    icon={<ContainerOutlined />}
-                  >
+                    icon={<ContainerOutlined />}>
                     DANH SÁCH CÔNG VIỆC
                   </Button>
                 </Link>
@@ -232,8 +233,7 @@ const NavEm: React.FC = () => {
                   <Button
                     className="text-black font-bold"
                     type="primary"
-                    icon={<UnorderedListOutlined />}
-                  >
+                    icon={<UnorderedListOutlined />}>
                     TẠO NHÀ TUYỂN DỤNG
                   </Button>
                 </Link>
@@ -243,8 +243,7 @@ const NavEm: React.FC = () => {
                   className="text-black font-bold"
                   type="primary"
                   icon={<LogoutOutlined />}
-                  onClick={onLogout}
-                >
+                  onClick={onLogout}>
                   ĐĂNG XUẤT
                 </Button>
               </Menu.Item>

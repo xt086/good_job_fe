@@ -1,13 +1,48 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Menu, Button, Drawer } from "antd";
 import { LogoutOutlined, TeamOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "../../Context/AuthContext";
+import client from "../../config";
 
 const Navbar: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const { user, logout } = useAuth();
+  const [userId, setUserId] = useState("");
+  const [employee, setEmployee] = useState("");
+
+  const getUserId = useCallback(async () => {
+    try {
+      const response = await client.get(`http://127.0.0.1:8000/user/user`);
+      setUserId(response.data.user.id);
+    } catch (err) {
+      console.error(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    const getEmployee = async () => {
+      try {
+        const response = await client.get(
+          `http://127.0.0.1:8000/employee/?userId=${userId}`
+        );
+
+        if (response.data && response.data.length > 0) {
+          setEmployee(response.data[0].id);
+        } else {
+          console.error("Empty response or invalid data structure");
+        }
+      } catch (error) {
+        console.error("Error fetching employee data:", error);
+      }
+    };
+    getEmployee();
+  }, [user]);
+
+  useEffect(() => {
+    getUserId();
+  }, [getUserId]);
 
   const showDrawer = () => {
     setVisible(true);
@@ -60,8 +95,7 @@ const Navbar: React.FC = () => {
                 <Button
                   className="text-black font-bold"
                   type="primary"
-                  icon={<TeamOutlined />}
-                >
+                  icon={<TeamOutlined />}>
                   NHÀ TUYỂN DỤNG
                 </Button>
               </a>
@@ -69,8 +103,7 @@ const Navbar: React.FC = () => {
                 <Button
                   className="text-black font-bold"
                   type="primary"
-                  icon={<UserOutlined />}
-                >
+                  icon={<UserOutlined />}>
                   ĐĂNG NHẬP
                 </Button>
               </a>
@@ -78,8 +111,7 @@ const Navbar: React.FC = () => {
                 <Button
                   className="text-black font-bold"
                   type="primary"
-                  icon={<UserOutlined />}
-                >
+                  icon={<UserOutlined />}>
                   ĐĂNG KÝ
                 </Button>
               </a>
@@ -87,21 +119,21 @@ const Navbar: React.FC = () => {
           )}
           {user && (
             <>
-              <a href="/nguoilaodong" className=" hover:text-gray-300">
-                <Button
-                  className="text-black font-bold"
-                  type="primary"
-                  icon={<UserOutlined />}
-                >
-                  TẠO THÔNG TIN CÁ NHÂN
-                </Button>
-              </a>
+              {!employee && (
+                <a href="/nguoilaodong" className=" hover:text-gray-300">
+                  <Button
+                    className="text-black font-bold"
+                    type="primary"
+                    icon={<UserOutlined />}>
+                    TẠO THÔNG TIN CÁ NHÂN
+                  </Button>
+                </a>
+              )}
               <Button
                 className="text-black font-bold"
                 type="primary"
                 icon={<LogoutOutlined />}
-                onClick={onLogout}
-              >
+                onClick={onLogout}>
                 ĐĂNG XUẤT
               </Button>
             </>
@@ -115,14 +147,12 @@ const Navbar: React.FC = () => {
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
+                d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
         </div>
@@ -133,8 +163,7 @@ const Navbar: React.FC = () => {
         placement="right"
         closable={false}
         onClose={onClose}
-        visible={visible}
-      >
+        visible={visible}>
         <Menu mode="inline">
           <Menu.Item key="1">
             <Link to="/timvieclam">TÌM VIỆC LÀM</Link>
@@ -149,8 +178,7 @@ const Navbar: React.FC = () => {
             <Button
               className="text-black font-bold"
               type="primary"
-              icon={<TeamOutlined />}
-            >
+              icon={<TeamOutlined />}>
               NHÀ TUYỂN DỤNG
             </Button>
           </Menu.Item>
@@ -160,8 +188,7 @@ const Navbar: React.FC = () => {
                 <Button
                   className="text-black font-bold"
                   type="primary"
-                  icon={<UserOutlined />}
-                >
+                  icon={<UserOutlined />}>
                   TẠO THÔNG TIN CÁ NHÂN
                 </Button>
               </Menu.Item>
@@ -169,8 +196,7 @@ const Navbar: React.FC = () => {
                 <Button
                   className="text-black font-bold"
                   type="primary"
-                  icon={<TeamOutlined />}
-                >
+                  icon={<TeamOutlined />}>
                   ĐĂNG NHẬP
                 </Button>
               </Menu.Item>
@@ -178,8 +204,7 @@ const Navbar: React.FC = () => {
                 <Button
                   className="text-black font-bold"
                   type="primary"
-                  icon={<UserOutlined />}
-                >
+                  icon={<UserOutlined />}>
                   ĐĂNG KÝ
                 </Button>
               </Menu.Item>
@@ -192,8 +217,7 @@ const Navbar: React.FC = () => {
                 className="text-black font-bold"
                 type="primary"
                 icon={<LogoutOutlined />}
-                onClick={onLogout}
-              >
+                onClick={onLogout}>
                 ĐĂNG XUẤT
               </Button>
             </Menu.Item>
