@@ -28,7 +28,7 @@ const NavEm: React.FC = () => {
   }, []);
 
   const getCompany = useCallback(async () => {
-    if (user) {
+    if (userId) {
       try {
         const response = await client.get(
           `http://127.0.0.1:8000/company/?userId=${userId}`

@@ -21,28 +21,26 @@ const Navbar: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const getEmployee = async () => {
+  const getEmployee = useCallback(async () => {
+    if (userId) {
       try {
         const response = await client.get(
           `http://127.0.0.1:8000/employee/?userId=${userId}`
         );
-
-        if (response.data && response.data.length > 0) {
-          setEmployee(response.data[0].id);
-        } else {
-          console.error("Empty response or invalid data structure");
-        }
-      } catch (error) {
-        console.error("Error fetching employee data:", error);
+        setEmployee(response.data[0].id);
+      } catch (err) {
+        console.error(err);
       }
-    };
-    getEmployee();
-  }, [user]);
+    }
+  }, [userId]);
 
   useEffect(() => {
     getUserId();
   }, [getUserId]);
+
+  useEffect(() => {
+    getEmployee();
+  }, [getEmployee]);
 
   const showDrawer = () => {
     setVisible(true);
